@@ -1,0 +1,553 @@
+
+JENKINS DOCUMENT
+====== =========
+
+Step 1 ==> This is the one way to install Jenkins on Linux server
+================================================================
+
+
+==> HOW TO INSTALL JENKINS ON LINX EC2-MACHINE
+
+Step1: Connect to your Linux machine
+
+Step2: update packages 
+ 
+      ==>sudo yum update -y
+
+Step3: check Java is installed, if installed Java
+
+          Java -version
+          yum install Java-1.8.0	
+           
+        To check and select one out of multiple java versions available
+         
+         sudo /usr/sbin/alternatives --config java
+		 
+
+Step4: Download latest jenkins code package 		 
+
+       sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+	 
+Step5: Import o key file from jenkins-ci to enable installation from the package
+
+       	 sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+		 
+Step6: yum install jenkins -y
+
+Step7: service start jenkins  { systemctl start jenkins}
+
+Step8: Access jenkins server using the public DNS of your ec2 on port 8080
+
+       https://(ec2-public-dns):8080
+       example: http://18.188.113.197:8080	
+
+ Note: Here you might have to allow port 8080 in your security group settings 
+
+
+   Useful Trips 
+   -------------
+   
+To start jerkins on a different port:
+
+   update port number in /etc/sysconfig/jerkins
+
+
+To fetch initial admin password:
+
+ Cd /var/lib/jerkins/secrets
+ cat initial admin password
+
+To stop jerkins service:
+
+  Sudo service jerkins stop
+
+To uninstall jerkins:
+
+   yum remove jerkins
+   rm -r /var/lib/jerkins
+==================================================================================
+
+Step2 Install jerkins on windows server - This is the second way
+================================================
+
+Step1: Install jerkins.exe file to your local machine and  
+
+Step2: Go to that path and Extract the package just give right button and choose extract option then click right button and give as "Run as administration"
+
+Step3: Then it's automatically install the Jenkins into your local machine 
+
+Step4: After that you have to take local ip-addresses and port number "http://localhost:port
+
+===========================================================
+
+Step3 install on windows server - This is second way
+===================================================
+
+Step1: Install jerkins.war file into your local machine
+
+Step2: Go to that war file path and open the command prompt
+
+Step3: Then hit this command "Java-jar Jenkins.war"
+
+Step4: Take ip-addresses port number "http://ipaddress:port
+
+=====================================================================
+
+HOW TO CREATE NORMAL JOB IN JENKINS SERVER:
+--------------------
+
+Step1: will login to the jerkins server
+
+Step2: Go to the "New Item" 
+
+Step3: Select Freestyle project and write there job name "Basic_Job"
+
+Step4: then Click on okay button it is gng to the Configure Menu
+
+Step5: check top to bottom of job and select build under Execute shell command
+
+Step6: Write there small script echo "who am i"
+
+Step7: Apply & Save => then click Build Now button,open the console output and let see Build output.
+
+
+
+How to use configure global security
+----------------------------------
+
+Go to Jenkins Home => Choose manage Jenkins => Click on Configure global Security
+
+Matrix based Security
+Project-based matrix authorization strategy
+
+=============================================================================
+
+
+If you face this issue ==> " Jenkins is missing the Overall/Read permission"
+----------------------
+
+Go to cd /varlib/jenkins ==> vim config.xml under <useSecurity>true</useSecurity> ==>change the true
+
+Note: use security is in false when did you get the permission denied, then you have to change to true
+
+========================================================================== 
+
+How should you integrate log files in Jenkins 
+----------------------------------------
+
+Go to jenkins home=>Manage Jenkins=>Manage Pluging=>install Audit Trail plugin  
+
+Again Go to Manage jenkins=>Configure menu=>Scroll Down, there you can find Audit Trail Option
+
+  Given the Log Location   <give the server path> /tmp/jenkinsAuditrail.log
+            log file size mB
+			Log file count
+			 Apply & Save
+       go to that path and check the log file cat filename
+=============================================================================
+how to Configure in jenkins to get a notification mails
+-------------------------
+
+Step1: Go to Manage jenkins=>go to Configure menu
+
+Step2: Scroll down there you can find out Extended Email Notification 
+
+       Give SMTP server: Just give smtp.gmail.com <if you have organization level SMTP server name you can give>
+       
+	   	Next Use SMTP Authentication: give your mail id "@gmail.com"
+        Password: 
+        Use SSl
+        SMTP Port 465
+        Apply & Save
+
+Go to any one job under Configure =>Post build actions=>select editable email-Notification	
+
+         Project recepient list <Mail id>	
+	     Attach build log <select>
+         Advanced settings 
+         Add Triggers <Always> select recepient list
+		 Apply & save
+		 Build now and let you see there out put
+		 
+========================================================================================================		 
+
+How do you configure schedule jobs & Automatically build jobs in jenkins <cron Tab>	
+--------------------------------
+
+Step1: Schedule the jobs by 2 types 
+
+    1 Timer
+	2 Poll SCM
+	
+Step2: Go to Job Config menu 
+
+Step3: Under SCM Select Git hub URl given there
+
+Step4: Go to build triggers There select " Build periodically"
+
+Step5: Minute Hour DOM Month DOW
+
+       Minute- Minutes within the hour(0-59)
+       Hour - The hour of the day (0-23)
+       DOM - The day of the Month (1-31)
+       The Month (1-12)
+       Day of the week (0-7) Where 0 and 7 are sunday.
+
+      */2 * * * * - This is timer setup every 2 mins trigger the job automatically
+
+After that again go to the job => under config menu
+
+Go to build triggers =>select Poll SCM => */2 * * * * - This is also every 2 mins trigger the job automatically
+
+
+it seems there are 2 ways like Build periodically, Poll SCM
+
+Diff B/W Build periodically and Poll SCM:
+
+Build periodically means - Schedule the Cron tab job and every 2 mints trigger the job automatically
+
+Poll SCM means- Scheduled the Cron tab job and any developers commit the changes in git hub then only 
+the job will be triggering other wise it won't get trigger	
+	
+=============================================================================================
+
+How to reset User password 
+=====================
+
+Step1: Go to the Jenkins home and go to Manage jenkins 
+
+Step2: Then scroll Down there available manage users go to there
+
+Step3: After select user and go to the user configure menu 
+
+Step4: Then Scroll down and select Change password give password there
+
+Step5: Save & Apply 
+
+============================================================
+
+How Nexus Artifactory uploader up-loader pipeline |Jenkins pipeline code
+================================================================
+
+Requirement is..
+
+=>Get the source code from the github
+
+=>maven build
+
+=>Configure nexus
+
+=>Push nexus server
+
+=>Download Artifact from nuxus to apache tomcat
+
+These all are with declarative pipeline
+
+=========================
+
+Step1: Go to the Java home Create New Job "Nexus_pipeline_Spring" select pipeline job
+
+Step2: Got to Job configure menu 
+
+Step3: Select Git under "Source code management"	it's available under job configure menu
+
+Step4: select pipeline script Write there groovy script 
+
+Step5: Apply & save
+
+Step6: Just hit build now and check in console output
+
+============================================================================
+
+Jenkins pipeline free-style vs pipeline rela-time scenario#1 
+====================================================
+
+
+Step1: Diff b/w Free style job and pipeline job
+
+   The main diff b/w any job and a pipeline job is that 
+
+pipeline job - Pipeline scripted job runs on the jerkins master using a light weight executor expected 
+
+to use very few resources in order to translate the pipeline automatic commands that executor or send to the agents.
+
+Freestyle Job - In the freestyle job everything executed in the agent,but for the scripted pipeline job, 
+but the pipeline code is translated in the master to automatic commands that are sent to the agents.
+
+Scenerio: 1-> You want build no.of free style projects on diff slaves
+
+          2 -> if you want userbase of reuirement 
+		  
+		  3 -> i am build all ci process in different stage
+		  
+		  4 -> I want execute 2 jobs parallel
+		  
+In the pipiline script Each stage also we can execute in the different nodes
+
+The above script and all we can weitw the groovy script in that pipeline job and we are using the programming language "DSL"
+
+Declarative pipeline is the latest version
+
+Script based pipeline is the old version
+
+
+Step 2: Create the job "pipeline job"
+
+Step3: Go to that job config menu
+
+Step4: Scroll down into Pipeline option 
+
+      There select if you want write there script you can write
+	  
+	  If you want run the script from github select "run from scm"
+	  
+	  if you want run this job multiple stages select pipeline syntax
+	  
+Step5: In the pipeline syntax all build stages and delivery and all available about scripting and all
+
+===========================================================
+
+How to add slaves in jerkins
+=================
+
+Step1: Go to Manage jerkins & Go to manage Node concept
+
+Step2: Just select the New Node 
+
+Step3: Give the node name and ok button
+
+Step4: There you can give the Remote root directory
+
+step5: Labels name depends on your organization name or if you want give any name you can give
+
+Step6: select "launch agent via Java web start"
+
+Step7: download the file into your remote server open that command prompt and run that command
+
+Step8: After that go to that job under config menu 
+
+Step9: select there "Restrict where this project can be run" give the label name 
+
+Step10:  Apply & Save and build now the job again go to Console output
+==============================================================
+
+
+sonarqube Integration with jenkins
+==============
+
+Step1: Go to jenkins home directory
+
+Step2: go to manage jenkins & manage plugins
+
+Step3: Install the sonar qube scanner plugin for jenkins 
+
+Step4: Go to the Configure System
+
+Step5: Select the Name and Server URL and Server authentication token 
+
+Step6: Apply & Save And again Go to Global tool configuration 
+
+Step7: You need to add Sonarqube Scanner Name and give version as per depends on sonar server version
+
+Step8: Apply & Save 
+ 
+==================================================================================
+
+### Blue Ocean Plugin 
+---------------------
+
+=> Blue ocean is a new user interface for jenkins and provides an interactive view for jenkins pipeline 
+
+=> you can install blue plugin then the jenkins version is 2.7 or above
+
+=> it's showing all jobs and very near interact with pipelines 
+
+=> We can download the build job logs easily 
+
+=> The blue plugin showing very good understanding dashboard means jobs pipelines job confiugure run the job etc..
+
+=> the blue ocean plugin easily understand dashboard for new users better then jenkins dashboard 
+
+======================================================================================================
+
+### Build Monitor Plugin 
+-----------------------
+
+=> Build Monitor plugin provides a highly visible view of the status of selected jenkins jobs 
+
+=> Install build monitor view plugin 
+
+=>  Go to Dashboard Select the Visible + option 
+
+=> Select Build monitor view 
+
+=> Select jobs Apply & Save 
+
+=> go to Dashboard you can see monitor for selected jobs 
+
+
+===================================================================================
+
+### How to pass parameters to downstream jobs 
+
+=> We need to install parameterized trigger plugin  
+
+=> Go to Dashboard Create job under configure menu select with string parameter 
+
+=> select execute shell "echo ${var_name}
+
+=> Create parameterizedTrigger_JOb  (this is downstream project)
+
+=> Go to job config menu select post build action under select parameterized option 
+
+=> Give there another job name and build it 
+
+=================================================================================
+
+### Pipeline job 
+------------------
+
+=> pipeline is a workflow with group of events or jobs that are chained and integrated with each other in sequence 
+
+every job in a pipeline has some dependency on one or more other jobs 
+
+=> Example: every pipeline is a inlet and outlet 
+
+=>build job deploy job test job release job  
+
+=============================================================
+
+### Build Pipeline Pluging
+---------------------------
+
+=> Install build pipeline plugin 
+
+=> Go to dashboard select + option 
+
+=> Select build pipeline plugin 
+
+=> There you can select jobs and save 
+
+=> then you can able to view jobs with chained process 
+===================================================================
+
+### HOw to run a job from command line 
+---------------------------------------
+
+=> Got to MANAGE-jenkins -> jenkins/cli -> download jar 
+
+=> Go to Global Tool Configure under Authorization -> check the permissions 
+
+=> Go to the Node-server .jar file path 
+
+=> Give this command java -jar jenkins-cli.jar -s http://ip:portnumber/ job jobname --username=admin --password=admin 
+
+=====================================================================================================
+
+### How to change the jenkins_Home Directory
+-------------------------------------------------
+
+=> go to Jenkins dashboard -> manage-jenkins -> configure-menu -> you can find current home directory path
+
+=> After that Go to cli to that path
+
+=> Create new directory any location on your system 
+
+=> Copy the jenkins home directory to new home directory 
+
+=> Change the environment variables for jenkins home path 
+
+=> restart the jenkins server 
+
+=> Go to Jenkins dashboard -> manage-jenkins -> configure-menu -> you can find out to change the jenkins home directory 
+
+======================================================================================================================
+
+### How to use the cli (command line interface) 
+-------------------------------------------------
+
+It is very easier 
+
+It is very faster 
+
+don't worry about the memory management (efficient) 
+
+=> Go to jenkins dashboard -> manage jenkins -> jenkinc cli 
+
+=> Download the jar file onto your local system 
+
+=> java -jar jenkins-cli.jar -s http://ip:port/ help
+
+=> It will ask passphrase 
+    -> Jenkins dashboar right corner of top page ->user-> configure -> ssh public keys 
+
+=> Same passphrase you can give there 
+
+=>java -jar jenkins-cli.jar -s http://ip:port/ safe-restart 
+
+=>Change the permissions-> Jenkins dashboard -> manage jenkins -> configure global security -> select "Any one can do anything" 
+
+=> java -jar jenkins-cli.jar -s http://ip:port/ safe-restart  	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+		  
+
+
+   
+    
+   
+  
+
+
+ 
+ 
+  
+	   

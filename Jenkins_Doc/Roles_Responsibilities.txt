@@ -1,0 +1,95 @@
+self Intro
+----------
+
+I have good exp on git, generally we are using source code management tool like git.
+I have good exp on build tool like maven.
+I have been worked on deployment tool like apache tomcat.
+We are using CI/CD purpose Jenkins tool.
+I have good exp on configuration management tool like Ansible & also we are using ansible for automation purpose.
+I have worked on Nexus for storing artifacts on remote repository  & also we are using sonarqube for code quality purpose.
+we are using Jira ticketing tool for issues tracking.
+
+Roles & Responsibilities
+-----------------------
+
+Creating Automated job
+configure a new job with newly created branch
+continuous builds
+Post build sending email to respective stakeholders
+Creating CI/CD pipelines by integrating GitHub, maven, Jenkins, Ansible.
+Creating Manual Job
+Installing Plug-in in Jenkins as per project requirements.
+Configuring Slaves in Jenkins.
+Every day check the build status
+Email Notifications
+Troubleshoot compile and build failures and facilitate resolution.
+Coordinating with the Development team to fix the Build related issues.
+Implemented release management processes which reduced manual
+mistakes, and the faster rollback of golden build releases in case of
+emergency
+Communicating with development team for Build plan and Build failures.
+Integrate jenkins with nexus for artifactory management.
+Implemented multi-parallel jobs in Jenkins which does CI, packaging, Sonar job and
+deployment job to different environments such as DEV, TEST and UAT.
+
+Creating EC2 Instances and configuring all necessary services in AWS
+Extensively used Code Commit, Code Pipeline.
+Configure and launching of EC2 using AMI and configuration the servers for specified application.
+Taking the backup of S3 and attaching the EBS to instance.
+
+
+
+Daily Activities.
+-----------------
+->Daily we have 10 to 15 mints standoff meeting 
+What you done yesterday and what you going to do today.   
+Share to team if you faceing any challenges
+->We are monitoring nightly build status
+->Git administration like adding files to repository
+->Coordinating with developement team to fix the build related issues
+->Jenkins administration
+->Setting up dev,test & uat environments on cloud and vmware 
+->modifying the Configurations in ansible play books
+->Work on POC,User Stories
+
+Challenges while doing Builds
+-----------------------------
+? GIT is going down
+-- checkout Fails(by another user locker the file)
+? maven
+-- compilation errors(by dev team)
+? Stopping servers
+-- server not reachable/ not able to stop the service Http status codes 404,503
+? Backup time
+-- Disk space issues
+? Deployment
+-- permission issues/connectivity issues
+-- App loading will failure
+-- server listener issues
+-- Framework issues
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

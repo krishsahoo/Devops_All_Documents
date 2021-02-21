@@ -1,0 +1,89 @@
+Linux & Shell Script 
+=======================
+
+Linux Architecture :
+-------------------
+
+Shell & system daemons =>
+
+The shell is the command interpretor in an operating system such as Unix or GNU/Linux,
+it is a program that executes other programs. It provides a computer user an interface to the Unix/GNU Linux system
+so that the user can run different commands or utilities/tools with some input data.
+
+-> program execution 
+-> variable interpretation 
+-> filename substitution
+-> I/O redirection 
+-> manage pipes 
+-> when a user login an instance of shell program is created for her/him
+-> interpreted programming language
+
+Bourne shell - /bin/sh and /sbin/sh 
+
+GNU bourne-again shell - /bin/bash 
+
+c shell - /bin/csh 
+
+korn shell  - /bin/ksh 
+
+
+Kernel => kernel is the core of the linux OS and it is also called as hardware interface 
+
+-> kernel has distinct pre-defined tasks to do and shell too has distinct predefined  tasks to do 
+-> Manage memory,so that all programs and running processes can work.
+-> manage cpu, which is used by running processes 
+-> manage access and use of the different peripherals connected to the computer
+-> manage file system 
+
+Hardware 
+
+
+===========================================================
+
+
+1)what is linux ??
+
+linux is an os, it is based one the linux kernel and can run on diff hardware platforms.
+
+------------------------------------------
+
+2)diff bw linux and unix 
+
+linux- linux is an open source software development and free os used for computer hardware,software,game development
+pcs etc.. 
+
+unix- unix is operating system which is basically used in intel,hp,internet servers,etc...
+
+linux- linux has priced as well as freely distributed and downloaded versions.
+
+unix- diff versions/flavours of unix have different price structures.
+
+linux- file support system includes Ext2 ext3 Ext4  jfs,xfs,Btrfs,Fat,etc..
+
+unix- file support system includes jfs,gpfs,hfs,etc...
+
+linux exmp- Redhat,Fedora,ubuntu,debian,etc.
+
+unix exmp- Solaris,all linux 
+
+---------------------------------------------------------------------
+
+3)why we use linux ??
+
+linux is used widely because it is completely different from other operating systems where every aspects comes with 
+something extra i.e some additional features.
+
+------------------------------------------------------------
+4)what is LILO ??
+
+LILO is a boot loader for linux.it is used mainly to load the linux operating system into main memory 
+so that it can begin it's operations.
+
+----------------------------------------------------------------
+5)what is swape space ??
+
+swap space is a certain amount of space used by linux to temporarily hold some programs that are running concurently
+this happens when RAM does not have enough memory to hold all programs that are executing.
+
+-----------------------------------------------------------------
+ 

@@ -1,0 +1,106 @@
+1)what is Maven artifact?
+
+Usually an artifact is a JAR file which gets arrayed to a Maven repository. One or more artifacts 
+a maven build produces such as compiled JAR and a sources JAR.Each artifact includes a group ID, 
+an artifact ID and a version string.
+
+------------------------------------------------
+2)Explain what is Maven Repository? What are their types?
+
+A Maven repository is a location where all the project jars, library jars, plugins or any other 
+particular project related artifacts are stored and can be easily used by Maven
+
+There are 3 types
+
+->local area
+->central area
+->remote area
+-----------------------------------------------
+3)Why Maven Plugins are used?
+
+Maven plugins are used to
+
+Create a jar file
+Create war file
+Compile code files
+Unit testing of code
+Documenting projects
+Reporting
+
+
+----------------------------------------------------
+4)how profiles are specified in Maven?
+
+Profiles are specified in Maven by using a subset of the elements existing in the POM itself.
+
+----------------------------------------------------
+5)how you can exclude dependency?
+
+By using the exclusion element, dependency can be excluded
+
+----------------------------------------------------
+6) Build Life cycle
+
+-> validate - validate the project is correct and all necessary information is available
+
+-> compile - compile the source code of the project
+
+->test - test the compiled source code using a suitable unit testing framework. These tests should not 
+require the code be packaged or deployed
+
+->package - take the compiled code and package it in its distributable format, such as a JAR.
+
+->verify - run any checks on results of integration tests to ensure quality criteria are met
+
+->install - install the package into the local repository, for use as a dependency in other projects locally
+
+->deploy - done in the build environment, copies the final package to the remote repository for sharing with 
+other developers and projects.
+
+--------------------------------------------------------------
+
+7)what are the two setting files
+
+Maven installation directory: $M2_Home/conf/settings.xml
+User’s home directory: ${ user.home }/ .m2 / settings.xml
+
+------------------------------------------------------
+
+8)Explain what would the “jar: jar” goal do
+
+
+jar: jar will not recompile sources; it will imply just create a JAR from the target/classes 
+directory considering that everything else has been done
+
+--------------------------------------------------------------
+9)what are the Maven’s order of inheritance?
+
+Parent Pom
+Project Pom
+Settings
+CLI parameters
+
+--------------------------------------------------------------
+10)For POM what are the minimum required elements?
+
+The minimum required elements for POM are project root, modelVersion, groupID, artifactID and version.
+
+---------------------------------------------------------------
+
+11)diff bw setting.xml and pom.xml 
+
+settings. xml contains system and/or user configuration are there 
+pom. xml contains project information. All build configuration ends up in the pom
+
+
+----------------------------------------------------------------------------
+
+=> mvn –o clean package ->run the build offline mode without network connection
+
+=>mvn -X or -e clean package -> run the build with debugging mode
+
+=>maven.javadoc.skip ->skip the generation and packaging of any specified Javadoc jar file
+
+
+
+

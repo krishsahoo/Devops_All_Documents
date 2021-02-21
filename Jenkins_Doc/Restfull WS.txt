@@ -1,0 +1,51 @@
+1) What is web server /
+
+-> Web services are client and server applications that communicate over the world wide web'server
+
+webservices provide a standard means of ineroperating bw software applications running on a variety 
+of platforms and frameworks.
+
+2) What is application Server ?
+
+-> An application server is a server specifically designed to run applications. 
+The server includes both the hardware and software that provide an environment for programmers to run 
+
+Exm: 
+. running web applications, 
+. hosting a hypervisor that manages virtual machines 
+. distrubuting and monitoring software updates 
+. processing data sent from another data 
+
+
+3) Diff bw webserver and app server ?
+
+Web server => Webserver contains web container only 
+
+Application server => Application server contains web container plus EJB container 
+
+Webserver => A webserver is good in case of static contents like static html pages
+
+Application server => Application server is relevant in case of dynamic contents like bank websites 
+
+Web server => Web server consumes less resources like cpu, memory 
+
+Application Server => Application Server utilizes more resources 
+
+Web server => Webserver provides the run time environment for web app 
+
+App server => Application server provides the runtime environment for enterprise application 
+
+
+4) Which one is most secure Restfull ws or Soap ?
+
+=>Soap defines its own security known as WS security when connect to comparing Soap is more secure than Rest 
+
+5) What is Restfull ws ?
+
+=> Representational state Transfer it is called Architectural style 
+=>It is less consume nd it is very fast 
+=>it can be executed any platform 
+=>no protocols
+=> language and platform independent 
+=> Different data format
+=>

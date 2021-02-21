@@ -1,0 +1,772 @@
+Kuberneties_Document
+====================
+
+Kubernetes (k8's) => it means first letter k and 8 th letter means "k8's"
+		 
+basically we can manage the containers in the cluster setup
+
+=> container orchestration service providers 
+
+Docker swarm, Ecs, Kubernetes, Dc/os, Openshift, Rancher kettle, Nomad, Kontena
+
+=>How does it Working
+
+If we use Kubernetes We can able to do the deployment, Scaling, and Monitoring
+
+=> Deployment :Deployment nothing but incase we can get any new request to deploy a container it should able to manage 
+
+=> Scaling: Scaling nothing but in case your application is consumed by more user you should able to create new containers 
+
+to handle that load  
+
+=> Monitoring: Monitoring means it should able to monitor and incase of any failures occurs on your docker container it is 
+
+going to replace with container
+
+
+=>These activities done by the kubernetes
+
+============================================================================
+
+# Kubernetes Components:
+-----------------------
+
+Nodes : Node is a physical or virtual server which can hold container in case something goes wrong with node 
+
+the container which are running in the node will not be available 
+
+A group of node we usually called as a cluster
+
+a cluster have more than one node and it spreds containers across the node
+
+in kubernetes we have atleast one master node to manage our entire cluster 
+
+
+
+##Diff b/w docker swarm and kubernetes        
+
+=> Docker swarm comes from docker like it's product of docker we did not setup separately or else 
+ 
+=>If you take kubernetes it's basically product of Google now it's maintain by cloud Google foundation CNF (Cloud native Foundation)
+Kubernetes hole separate different tool which is extensive which is advance docker swarm so you need to setup kubernetes separately
+learning kubernetes big advance is bit complex then docker swarm  
+
+
+Kube-Apiserver:
+--------------- 
+This apiserver acts an front-end for kubernetes the user management devices and cli's interact with apiserver to talk
+with kubernetes cluster 
+
+Etcd: 
+-----
+etcd is a distributed reliable key value store kubernetes all the store in etcd to manage the cluster 
+in kubernetes we will have master and nodes so it will store that information how many masters i have how many nodes i have
+all the information stored in the etcd
+
+etcd is available all the nodes in the cluster 
+
+Kube-Scheduler:
+--------------- 
+Kube-scheduler actually schedule the distribute the work to the multiple containers which are there in across the cluster
+
+
+Kube-controller-Manager:
+------------------------
+
+kube-controller-manager is responsible to identify if there is any failures in the node or containers so that it can able to
+replace with the new container or new node that is the major purpose kube-control-manager
+
+Controller manager will have many controllers, controllers always verify weather the desired state of the cluster is equal 
+to the actual state of the cluster, desired state is defined in the yaml file in my cluster container should be 5 scaled upto 10
+this is called desired state it should be always acts for the desired state if it is not acts per the desired cluster state 
+inside this controller manager will run the backend or watch the loops and brings this actual state to the desired state 
+
+Cloud-Controller-Manager:
+--------------------------
+it is useful if you are hosting your kubernetes in the cloud so it canb able to talk with your underlyin
+g cloud provider to manage your nodes 
+
+Kubelet:
+--------
+Kubelet is the major component it's called kubernetes agent on the nodes kubelet is doing take the load take the work from the master 
+Api server will interact with kubelet and deploy the containers 
+
+
+Kubectl:
+---------
+kubectl controls the Kubernetes cluster manager kubectl is ntng but a command line utility to run the kubernetes commands 
+
+
+Kube proxy:
+-----------
+kube proxy works at network level which will be forwarding network connections 
+
+
+CAdvisor "Container Runtime":
+---------------------------
+container runtime underlying software which is used to run our container so in our case we are using docker as a 
+in our container service apart from docker we might use rocket or few other container services if we need
+
+
+
+Pod :
+------
+Pod having more containers every container will be run on a pod it's like a layer in kubernetes cluster we couldn't manage 
+containers it will take pod only so every pod will have some ip network interface everything 
+
+if i want connect the container pod ip:port number
+
+
+replicas:
+-------
+Replicas means auto-scaling future will have if any service disappear then it will fet monitor backend then automatically
+it can be able to create the service with same configuration
++-
+
+Replicas and pods is loose coupling
+
+==>replicas are 2 ways: 1) declarative model and 2)imperative model 
+
+Imperative model is emergency time only 
+
+declarative models are all about describing the end-goal.
+
+Desired state: desired state is what they want, active state means what they have got the aim of the game is for the 
+two to match-current state should always match desired state  
+In master:
+-----------
+  kube-apiserver, etcd, kube-scheduler, kube-controller-manager, cloud-controller-manager, 
+  
+  
+In Node:
+--------
+
+  kubelet, Kube-proxy, container-runtime
+
+
+========================================================================================================  
+
+
+kubernetes install steps:
+--------------------		 
+
+1. Create Ubuntu EC2 instance
+
+2. install AWSCLI
+
+  => curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip
+   
+  => apt install unzip python
+  
+ => unzip awscli-bundle.zip
+  
+     #sudo apt-get install unzip - if you dont have unzip in your system
+  
+ => ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+ 
+ 
+3. Install kubectl
+
+
+ => curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+ => chmod +x ./kubectl
+ => sudo mv ./kubectl /usr/local/bin/kubectl
+ 
+ 
+ 
+4. Create an IAM user/role with Route53, EC2, IAM and S3 full access
+
+   =>Go to the AWS Dashboard and select roles option
+  
+   => There select create role option 
+ 
+   => After there we have to select EC@ role select next permissions 
+
+   => searching permission to s3fullaccess, EC2fullaccess, ROUTE53FULLACCESS & IAMfullaccess
+
+   => Next Add tags give name and all like (tag-name: k8s-role, rolename: k8s-role
+
+
+
+5.Attach IAM role to ubuntu server
+
+
+  => Go to the k8s server and select Action under we have to select instance setting ATTACH/Replace a role
+
+  => we have to select our role and APPLY   
+  
+  
+       =>  Note: If you create IAM user with programmatic access then provide Access keys.  
+	   
+	   
+=> aws configure => Incase we are using user we should execute even though you are not using you should execute
+
+=> If you give aws configure then you should give this name
+
+    AWS Access Key ID [None]:
+    AWS Secret Access Key [None]:
+    Default region name [None]: ap-southeast-1
+    Default output format [None]:
+	
+
+
+6. Install kops on ubuntu instance: => Install Kops then only we can create aws cluster
+
+
+=> curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+=> chmod +x kops-linux-amd64
+=> sudo mv kops-linux-amd64 /usr/local/bin/kops	
+
+
+
+
+7. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain)
+
+
+ => Let's go to Route 53 service it is under networking services
+ 
+ => Select DNs Management (domain naming services)
+ 
+ => select Create Hosted Zone 
+ 
+ => Give there Domain name " Valaxy.in" select private hosted zone
+ 
+ => then select vPC we are using Singapore zone select there
+ 
+ => create it
+ 
+ 
+
+8. create an S3 bucket
+
+  =>  aws s3 mb s3://kittu1992.third.in   => mb means make bucket
+
+
+9. Expose environment variable:
+
+
+   =>  export KOPS_STATE_STORE=s3://kittu1992.third.in
+
+   
+10. Create sshkey before creating cluster
+
+
+    ssh-keygen
+
+
+11.	Create kubernetes cluster definitions on S3 bucket
+	   
+     
+  => kops create cluster --cloud=aws --zones=ap-southeast-2b --name=kittu1992.third.in --dns-zone=third.in --dns private
+
+ 
+ 
+12. Create kubernetes cluster
+
+  => kops update cluster kittu1992.third.in --yes
+  
+  
+
+13. Validate your cluster
+
+  => kops validate cluster
+  
+======================================================================================================
+
+How to connect master 
+
+Got to .ssh path " privat_key"
+
+=> ssh -i id_rsa admin@masterip
+  
+Check you pods 
+
+=>Kubectl get nodes  => display all information about master and nodes
+
+## How we can able to create pods in kub_cluster
+ 
+  => kubectl run sample-nginx --image=nginx --replicas=2 --port=80
+  
+  => kubectl get pods
+  
+  => kubectl get deployments
+  
+## Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them  
+
+  => kubectl expose deployment sample-nginx --port=80 --type=loadBalancer
+ s 
+  =>  Kubectl get services
+  
+  =>kubectl get services -o wide =>it will give more information
+  
+  => Kubectl describe pod name => it will give all about pod information
+  
+  => kubectl delete pod podname 
+ 
+## To delete cluster
+
+  => kops delete cluster clustername --yes
+
+
+================================================================================
+## there are different kind of deployments
+
+first one pod deployment
+
+=> create the file
+
+vim pod.yml
+ 
+apiversion: v1
+kind: pod
+metadata: 
+  name: sample-pod
+  labels: 
+  zone: pod
+  version: v1
+spec:
+  containers: 
+  - name: sample-ctr
+    image: sample-ctr
+    ports:
+    - containerport: 8080
+:wq!
+
+=> kubectl create -f pod.yml    
+
+=> kubectl get pods
+
+=> kubectl describe pod pod name
+	
+=> kubectl get rs => it's showing replca setting
+
+
+Service object :
+--------------
+
+    Service object having virtual ip and its stable and one port number as well this port is service port 
+
+actually  we need to connect service object to pods as well then we can connect with labels, labels is very powerfull
+like how do we connect through label "label-app=appname" 
+
+In case if we have so many pods some times pod will be delete 'disappear" it will be appear some where else in cluster 
+with same configuration.
+
+
+==============================================================
+ 
+## Deploy for nginx
+	
+=> kubectl create deployment nginx-depl --image=nginx
+
+=> kubectl get deployment
+
+=> kubectl get pod   => container creating
+
+=> kubectl get replicaset  =>means replicas manage of a pod
+
+=>kubectl edit deployment nginx-depl  =Auto generated configuration file with default value
+
+=> edit the file and change the version there "image:1.16
+
+:wq!
+
+=> kubectl get pod   =>Now there image name was changed 
+
+##Next Debugging
+
+=>kubectl create deployment mongo-depl --image=mongo-depl
+
+=>kubectl get deployment
+
+=> kubectl logs pod name
+=>kubectl exec -it cid -- /bin/bash
+ exit
+ 
+=> kubectl delete deployment image name
+
+================================================= 
+	 
+
+=> kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep user | awk '{print $1}')
+
+=>kubectl get sa user name -n kube-system
+
+============================================================
+
+##How a ReplicationController Works
+--------
+
+If there are too many pods, the ReplicationController terminates the extra pods. If there are too few, 
+the ReplicationController starts more pods. Unlike manually created pods, the pods maintained by a ReplicationController 
+are automatically replaced if they fail, are deleted, or are terminated. For example, your pods are re-created on a node 
+after disruptive maintenance such as a kernel upgrade. For this reason, you should use a ReplicationController 
+even if your application requires only a single pod. A ReplicationController is similar to a process supervisor, 
+but instead of supervising individual processes on a single node, the ReplicationController supervises multiple pods 
+across multiple nodes.
+
+
+vim rs.yml
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+
+:wq!
+
+=> kubectl create -f filename
+
+=>kubectl describe rsname  => check the replication status
+
+=>kubectl get pods
+
+=>kubectl apply -f filename => this means if you did any modification in existing file then you need to apply command 
+
+=>kubectl get rs/name => you check how many replicas are running 
+
+=>kubectl delete rsname --cascade=false => You can delete a ReplicationController without affecting any of its pods.
+
+=> kubectl get rs name 
+
+Scaling:
+
+The ReplicationController makes it easy to scale the number of replicas up or down, either manually or by an auto-scaling 
+control agent, by simply updating the replicas field.
+
+Rolling updates:
+
+The ReplicationController is designed to facilitate rolling updates to a service by replacing pods one-by-one.
+=========================================================================================
+
+### Kubernetes Service Object
+
+
+
+Service objects are 2 ways
+
+1) Imperative way
+
+ This means we can run just onre cammand in command prompt
+
+2) declarative way
+
+this means we can deploy one app then we can write .yml file and deploy it on containers
+
+
+
+Create own service
+
+vim svc.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
+	  
+:wq!
+
+=>kubectl get services
+
+=> kubectl describe my-service
+
+=> go to master server in bound rules there you need to add new rule in TCP "30001"
+
+=> take pub ip:30001
+
+=>kubectl get ep service name
+
+========================================================
+
+### What is namespace 
+
+
+=> kubectl get ns =>you can get information about namespace 
+
+There are 3 default name spaces available 
+
+1) default
+
+2) kube-publicly
+
+3) kube-system
+
+1)default: if by default you did not specify the particular namespace this application is going to deploy in default namespace
+
+2)kube-public: To access the our services outside of public and configuration authentication authorization and all in public name space we are using
+
+3)kube-system: By default namespace which are going to deploy the all our services like as Scheduler, controller manager, api-server
+
+
+***How to create namespace 
+
+=>kubectl create namespace name
+
+=> kubectl get ns
+
+** Create one yaml file and deploy into that namespace
+
+vim new namespace.yml 
+
+apiversion: v1
+kind: Namespace
+metadata:
+  name: new-namespace
+  
+:wq!
+
+=>kubectl apply -f new namespace.yml 
+
+=>kubectl get ns
+
+**How to deploy application in our own namespace   
+
+=> kubectl run default-name --image=nginx --namespace=new-namespace
+
+=>Kubectl get pods --namespace=new-namespace => check your application deployed or what in your own namespace
+
+=> kubectl get deployment --namespace=new-namespace =>check the deployed application this way also 
+
+***deploy application in own namespace | This is 2nd way
+
+vim tutum.yml
+
+apiversion: v1 
+kind: pod
+metadata:
+  name: mytutum
+  labels:
+    zone: prod
+	version: v1
+  namespace: test
+  
+  
+spec: 
+  containers:
+  - name: mytutumapp
+    image: tutum/hello-world
+    ports:
+    - containPort: 80
+
+:wq!
+
+=>kubectl apply -f filename
+
+=> kubectl get pods --namespace=test
+
+=>kubectl config view => information about newnamespace
+
+=>kubectl config set-context --current --namespace=new-namespace 
+
+=>kubectl delete namespace newnamespace
+
+" So here one name space was deleted in your current path but by default namespace is available"
+
+=> kubectl config view => check there default name 
+
+"If i want to deploy one application to that namespace it will through error because first we should revert back the 
+exist namespace then only the application deployed to that namespace"
+
+=>kubectl run tutum3 --image=nginx 
+
+=>kubectl config set-context --namespace =>if you want revert back to that namespace you should give namespace empty like ""
+
+=> kubectl run tutum3 --image=nginx 
+
+=> kubectl get pods --namespace=new-namespace 
+
+==============================================================================================
+ 	
+### What is Daemonset
+
+A daemonset ensures that all nodes run a copy of a pod.
+
+As nodes are added to the cluster,pods are added to them. As nodes are removed from the cluster,those pods are garbage collected
+deleting a daemonset will clean up the pods it created.
+
+Sometypical uses of a daemonset are
+
+=> running a cluster storage daemon, such as clusterd,ceph, on each node
+=> running a logs collection daemon on every node, such as fluentd or filebeat.
+=> running a node monitoring daemon on every node, such as prometheus Node exporter flowmill, sysdig agent, collected, dynatrace
+one agent, Appdynamic agent, datadog agent, New relic agent, Ganglia gmond, Instana agent or elastic metricbeat.
+
+*** How it's working
+
+=> kubectl create namespace "monitoring" => need to create namespace 
+
+=>kubectl get ns
+
+vim node_exporter.yml
+
+apiversion: apps/v1 
+kind: DaemonSet
+metadata:
+  labels:
+    app: node-exporter1
+  name: node-exporter1
+  namespace: monitoring
+spec:
+  selector:
+  matchLabels: 
+    app: node-exporter1
+  template: 
+    metadata: 
+	  labels: 
+	    app: node-exporter1
+  spec: 
+    containers: 
+	  - name: node-exporter1 
+	    image: prom/node-exporter:v0.18.1
+		ports:
+		  - containerPort: 9100
+		    hostPort: 9100
+			protocol: TCP
+			
+:wq!
+
+=>kubectl apply -f node_exporter.yml 
+
+=>kubectl get ds --namespace=monitoring 
+
+** Go to worker node you can search => docker ps | grep node
+
+=>kubectl describe ds node-exporter --namespace=monitoring 
+
+=> kubectl get ds --namespace=monitoring 
+
+=> kubectl delete ds "dsname" --namespace=monitoring => delete the ds	
+
+===============================================================================================
+
+### Kubernetes Deployment Controller
+
+
+For EXM If we are use pods we can't able to get scaling up then we can use replicaset for this draw back is
+without downtime how will do  that time we will use deployment object
+
+The deployment object help us rollback something goes wrong we want revert back some application these and all the deployment 
+object working there
+
+*** How it work's
+
+Rolling update deployment 
+
+Creating a deployment:
+
+1)Declarative method of managing pods via Replicasets
+
+2) Provide rollback functionality and update control
+
+3) Updates are managed through the pod-template-hash label 
+
+4) Each iteration creates a unique label that is assigned to both the Replicaset and subsequent pods.
+
+
+Recreate: All existing pods are killed before the new ones are created 
+
+RollingUpdate: Cycles through updating the pods according to the parameters:maxSurge and maxUnavailable
+
+=>kubectl get nodes
+
+create deployment
+
+vim deployment_controller.yml 
+
+apiversion: apps/v1 	
+kind: deployment
+metadata:
+  name: name-app-deploy 
+  labels:
+    app: node-app 
+spec: 
+  replicas: 2
+  selector: 
+    matchLabels: 
+	  app: node-app 
+  template: 
+    metadata: 
+      labels: 
+        app: node-app
+  spec: 
+    containers: 
+    - name: node-web-app
+      image: nginx 
+      ports:
+      - containerPort: 8080
+
+:wq!
+
+=>kubectl apply -f deployment_controller.yml 
+
+=>kubectl get pods -l app=node-app 
+
+=> kubectl get rs -l app=node-app 
+
+=> kubectl get deployments -l app=node-app 
+
+=> kubectl describe deployment node-app
+
+Next we should deploy the v2 with same image and equal to that container 
+
+=> kubectl set image deploy node-app-deploy node-web-app=nginx:v2 
+
+=> kubectl get pods -l app=node-app 
+
+*** Something goes in application we need to edit that application 
+
+=> kubectl edit deploy node-app-deploy 
+
+*** If you want to rollout the deploy status 
+
+=> kubectl rollout status deploy node-app-deploy 
+
+**8 If you want check the application is deployed or not to latest version
+
+=> kubectl describe deploy node-app-deploy | grep -i image 
+
+=> kubectl describe deploy node-app-deploy 
+
+=> kubectl get pods -l app=node-apply => see if any errors will be there now you can check history and all 
+
+=> kubectl rollout status deployment node-app-deploy 
+
+=> kubectl rollout history deployment node-app-deploy 
+
+=> kubectl rollout undo deployment node-app-deploy 
+
+=> kubectl get pods -l app=node-app 
+
+=> kubectl scale deployment node-app-deploy --replicas=4    => this is scale up 
+
+=> kubectl scale deployment node-app-deploy --replicas=3 => this is scaled out  
+
+=> kubectl get pods -l node=app-deploy 
+
+=> kubectl get pods -o wide -l node=app-deploy => all information about application 
+
+=> kubectl delete -f deploy.yml => delete the all deployment application 
+

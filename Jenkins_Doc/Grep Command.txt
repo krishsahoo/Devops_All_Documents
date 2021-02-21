@@ -1,0 +1,100 @@
+grep command 
+
+● It search for patterns
+○ Syntax:­ # grep options pattern file(s)
+
+Options:­
+○ ­i ignore case
+○ ­n line number
+○ ­c count
+○ ­v invert selection
+○ ­E expression
+○ ­B before lines
+○ ­A after lines
+○ ­w exact word
+○ ­r or ­R recursive
+
+Wildcard characters :­
+
+. single character
+○ ^ beginning of line
+○ $ end of line
+■ ^ and $ called as anchors.
+[ ] list
+○ ­ range
+
+Ex:­ # cat file | grep word (search for word)
+● # grep word file :­
+○ When we are working only on files, we can use like above
+
+# grep ­i word file :­
+○ It displays the word in ignorecase , i.e case sensitive etc..
+● # grep ­n word file :­
+○ It displays funded lines with line numbers.
+● # grep ­c word file :­
+○ It displays founded lines count.
+● # grep ­B 2 word file :­
+○ It displays before lines
+■ Here 2 Lines range,i.e how many lines.
+○ Before 2 lines of the result.
+● # grep ­A 2 word file :­
+○ It displays after 2 lines
+● # grep word * :­
+○ It searches for the word in all files in current directory.
+● # grep ­E ‘word1’ | ‘ word2’ file :­
+○ It displays either word1 or word2 or both presented lines.
+● # grep word1 file | grep word2 :­
+○ It displays the lines which must have word1 and word2 in a file.
+
+Anchors:­
+○ # grep ­i ^u file :­
+■ Displays the lines beginning with u.
+○ # grep ­i t$ file :­
+■ Displays the lines ends with t.
+# grep ­i ^.i file :­
+■ Beginning with anything but second letter must be i.
+○ # grep ­i ^[gu] file :­
+■ Begin with g or u(list [ ] )
+○ # grep ­i ^[g­u] file :­
+■ Begin with g to u.( ­ range)
+○ # grep [0­9] file :­
+■ Displays the lines which has numbers.
+○ # ls ­l | grep ^­ :­
+■ Displays current location files only( ­ is begining of files in log list)
+# ls ­l | grep ­c:­
+○ Items count in the current directory.
+● # grep ­v word file :­
+○ Displays the remaining lines (i.e not the given word inverse)
+
+
+
+DIFF TYPES OF GREPS
+---------------------
+1.grep, egrep (Extended GREP), fgrep (Fixed GREP), pgrep (Process GREP), rgrep (Recursive GREP) etc
+
+MAINLY IN THE MARKET THREE GREPS.
+1.GREP
+2.EGREP
+3.FGREP
+
+
+EGREP
+---------
+Egrep supports more regular expression patterns
+
+1.egrep p{2} *
+
+
+fgrep
+-------
+fgrep is a faster version of grep which does not support regular expressions and therefore is 
+considered to be faster.
+
+fgrep is equal to grep -F
+
+
+
+
+
+
+

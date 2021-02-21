@@ -1,0 +1,226 @@
+
+ 1)Multi_branch_Pipeline: 
+
+The Multibranch Pipeline project type enables you to implement different Jenkinsfiles for different branches 
+of the same project. In a Multibranch Pipeline project, Jenkins automatically discovers, manages and executes 
+Pipelines for branches which contain a Jenkinsfile in source control.
+
+=>If you create multibranch job and trigger this job then automaticcaly build the job from multibranches as depends 
+the code
+
+=>whenever If you create new future branch in that repository then the job can trigger automatiically from the future 
+branch depens the code mean while you can check in consoloe output
+
+=====================================================================================================
+
+2)Webhook
+
+A webhook is a mechanism to automatically trigger the build of a Jenkins project upon a commit pushed in a Git repository. 
+In order for builds to be triggered automatically by PUSH and PULL REQUEST events,
+a Jenkins Web Hook needs to be added to each GitHub repository. You need admin permissions on that repository.
+
+=>Go in the page: Manage Jenkins -> Configure System -> GitHub:
+Give Github_Url and Select webhook and give Webhook_URl
+=>Source Code Management 
+select git and give repo url with permissions 
+=>Build Trigger Option
+select github hook trigger for gitscm polling
+=>Go to git hub repo under setting select webhook option 
+give payload URl(Jenkins UrL)and content type and update webhook
+
+Jenkins will now receive push and pull request notifications for that repository, and related builds will 
+be automatically triggered
+
+==========================================================================================================
+3) Upload war file to Nexus using Jenkins Pipeline as Code
+
+=> Create the pipeline job 
+Select git and give the repo URL 
+Next Select pipeline syntax under you need to select nexus artifact plugin under
+you need to write pipeline scritp 
+
+first stage build 
+second stage nexus-war uploader under
+give group id,artifactid,version,nexus repo url,credentials,type war or jar,file name..
+then generate the pipeline script and triggering the build 
+
+=============================================================================================
+
+1)what is declarative pipeline ??
+
+Declarative pipeline is a relatively new feature that supports the pipeline as code concept. 
+It makes the pipeline code easier to read and write. This code is written in a Jenkinsfile 
+which can be checked into a source control management system such as Git.
+
+
+2) what is scripted pipeline ?
+
+Whereas, the scripted pipeline is a traditional way of writing the code. In this pipeline,
+the Jenkinsfile is written on the Jenkins UI instance. 
+
+
+
+3)diff bw declarative and scripted ??
+
+The key difference between Declarative pipeline and Scripted pipeline would be with respect
+to their syntaxes and their flexibility. 
+
+================================================================================================
+
+===============================================================================================
+
+1.what is continuous integration ??
+2.what type of jobs have you configured in jenkins
+3.what are the types of jobs are available in jenkins 
+4.what is diff bw free style and pipeline 
+5.what is pipeline 
+6.what is declarative pipeline
+7.diff bw declarative and script pipeline 
+8.write the pipeline syntax 
+9.what is master/slave architecture?what is use of master/slave 
+10.how many we can connect the slaves
+11.how many ways we can provide the secuerity for your jenkins server 
+12.what is sonarqube? have you configure? how you configure 
+13.what type of artifactory repository tool have you used
+14.what is the use of artifactory tools?
+15.how do you declare a variable in pipeline 
+16.what is DSL language 
+17.What is upstream/downstream projects?what is the use of it?which scenario you configure it??
+18.How you configure jdk,mvn,gradle....
+19.what are the plugins have you used in your project ?
+20.how to take backup my jenkins
+21.what is jenkins home directory
+22.how to delete old builds automatically
+23.how to configure multiple environment deployment ??
+24.diff bw Authentication and Autherization??
+
+====================================================================================
+1)1) What is Jenkins?
+
+->Jenkins is a free open source Continuous Integration tool and automation server to monitor
+ continuous integration and delivery
+---------------------------------------------------------
+
+2)What are the features of Jenkins?
+
+->Free open source.
+->Easy installation on various operating systems.
+->Build Pipeline Support.
+->Workflow Plugin.
+->Test harness built around JUnit.
+->Easy upgrades.
+->Rapid release cycle.
+->Easy configuration setup.
+->Extensible with the use of third-party plugins. 
+
+----------------------------------------------------------
+3)Why we use Jenkins?
+
+->Build failures are cached during the integration stage.
+->Notifies the developers about build report status using LDAP (Lightweight Directory Access Protocol) mail server.
+->Maven release project is automated with simple steps.
+->Easy bug tracking.
+->Automatic changes get updated in the build report with notification.
+->Supports Continuous Integration in agile development and test-driven development.
+
+-------------------------------------------------------------------
+
+4)What is Continuous Integration in Jenkins?
+
+->Continuous integration is the process of continuously checking-in the developer’s code into a version control 
+system and triggering the build to check and identify bugs in the written code.
+
+-----------------------------------------------------------------------------
+5)What is the difference between Hudson and Jenkins?
+
+->There is no difference between Hudson and Jenkins. Hudson was the former name of Jenkins, after going 
+through several issues the name was changed to Jenkins.
+
+-------------------------------------------------------------------------
+
+6)What is Groovy in Jenkins?
+
+->Apache Groovy is the dynamic object-oriented programming language that is used as a scripting language 
+for the Java platform
+->Apache Groovy comes with some useful features such as Java Compatibility and Development Support.
+
+-------------------------------------------------------------------------
+7)What is Jenkinsfile?
+
+->Jenkins file is a text file where all the definitions of pipelines are defined is called Jenkinsfile
+->t is being checked in the source control repository.
+
+-----------------------------------------------------------------------
+
+8)What is Jenkins Pipeline
+
+->Continuous integration or continuous delivery pipeline consists of build, deploy, test, release pipeline
+->The pipeline feature saves a lot of time and error in maintaining the builds
+->Basically, a pipeline is a group of build jobs that are chained and integrated in sequence.
+
+---------------------------------------------------------------------------------------
+
+9)Diff bw ci,cd,cd 
+
+Ci->Continuous Integration happens before you build as you are testing code
+->CI enables automated build and testing so that teams can rapidly work on a single project together
+
+cd (delivery) ->Delivery requires building, testing, and releasing faster and more frequently
+-> when your code is always ready to be released but isn’t pushed to production unless
+you make the decision to do so
+->It is a manual step
+
+Note: It does not involve every change to be deployed
+
+
+cd(deployment)->Continuous Deployment any updated working version of the app is automatically pushed to production.
+
+Note: Involves every change to be deployed automatically
+-------------------------------------------------------------------------------------
+
+10)How to make sure that your project build does not break in Jenkins?
+
+->Clean and successful installation of Jenkins on your local machine with all unit tests.
+->All code changes are reflected successfully.
+->Checking for repository synchronization to make sure that all the differences and changes related to 
+config and other settings are saved in the repository.
+
+----------------------------------------------------------------------
+
+11)What are Parameters in Jenkins?
+ 
+->Parameters are supported by the Agent section and are used to support various use-cases pipelines.
+->Parameters are defined at the top-level of the pipeline or inside an individual stage directive.
+
+------------------------------------------------------------------
+
+12)How can you secure Jenkins?
+
+(i) Access Control -> there are 2 ways 
+
+ .Security Realm-> determines a user or a group of users with their passwords.
+ 
+ .Authorization Strategy-> defines what should be accessible to which user. In this case, there might 
+ be different types of security based on the permissions granted to the user such as Quick and simple 
+ security with easy setup, Standard security setup, Apache front-end security, etc.
+ 
+(ii) Protecting Jenkins users from outside threats. 
+
+----------------------------------------------------------------------------------
+
+13) Diff bw Authentication and Autherization ??
+
+.Authentication and authorization might sound similar, but they are distinct security processes in the world of
+ identity and access management (IAM).
+ 
+.Authentication confirms that users are who they say they are. Authorization gives those users permission
+to access a resource. 
+
+--------------------------------------------------------------------------------------
+14)what is high availability 
+
+.High availability is a quality of a system or component that assures a high level of operational performance 
+for a given period of time.
+
+----------------------------------------------------------------------------
+15)

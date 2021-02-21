@@ -1,0 +1,586 @@
+﻿
+ANSIBLE_DOCUMENT :
+=================
+
+
+
+Ansible installation
+--------------------
+
+Yum update -y
+
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+rpm -ivh epel-release-latest-7.noarch.rpm
+
+yum repolist   => you should see epel package 
+
+yum --enablerepo=epel install ansible
+
+ansible --version
+
+=================================================================
+
+### How to install ansible on redhat server 
+
+------------------------------------------
+
+
+=> cat /etc/redhat-release
+
+=> yum repolist 
+
+=> sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+=> sudo dnf update
+=> rpm -qa | grep epel
+=> sudo dnf --disablerepo="*" --enablerepo="epel" list available
+=> cat /etc/redhat-release
+=> yum install ansible -y
+=> rpm -qa | grep ansible
+
+=============================================================================================
+
+
+cd /etc/ansible
+
+here /Roles, hosts, ansible.cfg file is available 
+
+We need to connect from master to nodes
+
+go to hosts file => you can confifgure node ip's and all
+
+[server]
+10.0.0.1
+[node]
+10.0.0.2
+
+this is the way we are calling as a static inventory 
+
+dynamic inventory =>if we don't have ip's and all on the fly we are getting the ip's means dynamic inventory file.
+
+then 
+
+go to 
+
+cd /etc/ansible
+
+vim ansible.cfg 
+
+go to ansible.cfg file there you need to remove comment to sudo_user line 
+
+
+==> how we can connect with nodes via password less and password:
+-------------------------------------------------------------
+
+there are 2 ways 
+
+one is just go to .pem file and edit with notepad copy the file and past into the node server exact one location
+
+2 nd way is through winscp means we are calling scp tool .pem file send to master server through winscp tool go to
+
+that .pem file path and we can use manually
+
+ls -lrt
+
+chmod 600 .pem file
+
+
+then we need to check connectivity and all 
+
+=> ansible -m ping -u ec2-user --private-key=.pem file all
+
+if i want to run different users then we need to configure in hosts 
+
+vim hosts
+
+[server]
+10.0.0.12 ansible_user=ec2-user
+
+[node]
+10.0.0.13 ansible_user=ec2-user
+
+then check without user
+
+=> Ansible -m ping --private-key=.pem file all
+
+=> Ansible group name -m ping --private-key=.pem file 
+
+
+i want check with only ip address
+
+=> Ansible ip address -m ping --private-key=.pem file 
+
+==============================================================================
+
+Ansible Modules:
+---------------
+
+shell module, command, copy, yum, apt, template, inline, file, user, group, template, docker, service
+
+
+
+Copy module:
+
+   => Ansible group name --private-key=.pemfile -m copy -a 'src=/opt/file1 dest=/opt'
+   
+   
+   
+command module:
+
+  => Ansible group name --private-key=.pem file -m command -a 'mkdir krish'
+  
+  => Ansible group name --private-key=.pem file -m command -a 'pwd'
+  
+
+If we want use the "|" symbol are any double command it can't work in command mode this is draw back in command mode
+
+It can work in shell mode this is the use of in shell module.
+
+
+Shell:
+
+ => Ansible group name --private-key=.pem file -m shell -a 'cat sample.txt | grep -i sample | wc -l'
+ 
+ =>Ansible group name give key name -m shell -a "pwd && cat sample.txt ls -lrt"
+ 
+ 
+file:
+
+  => Ansible group name --private-key=.pem file -m file -a 'dest=/home/ec2-user/file2 ls -lrta'
+  
+  =>Ansible group name --private-key=.pem file -m file -a 'dest=/home/ec2-user/linux.txt state=touch mode=644'
+  
+  => Ansible group name --private-key=.pem -m file -a 'dest=/home/ec2-user/file name state=absent'
+  
+  => Ansible groupname --private-key=.pem -m file -a 'dest=/home/ec2-user/lakshmi mode=644 state=directory'
+  
+  
+Linein module:
+
+    => Ansible group name .pem file -m lineinfile -a 'dest=/home/ec2-user/file1 line="this notes written by krish reddy"'
+
+    => Ansible group name .pem file -m lineinfile -a 'dest=/home/ec2-user/file1 line="hello linux"'
+
+
+Yum, Service :
+
+   => Ansible groupname .pem -m yum -a 'name=httpd state=present'
+
+   => Ansible group name .pem -m service -a 'name=httpd state=started'
+
+   => If you want started, stopped, restarted, reloaded use this service command
+
+=========================================================================
+  
+# Ansible_PlayBooks:
+--------------------
+
+Why we are using play books if we want deploy applications and we want install softwares we want upgrade version and all 
+everything we can write playbooks 
+
+we want execute 4 to 5 tasks execute at at a time how we will do that's why we are using ansible
+
+Name: playbook.yml
+
+Create a file through playbook
+
+vim create_a_file.yml
+
+---
+- hosts: nodes
+  tasks:	
+  - name: create a empty file
+      file:
+	    path: /home/ec2-user/first_playbook 
+		state: touch
+		  
+		:wq!
+
+=> Ansible-playbook create_a_file.yml --private-key=ansible.pem --syntax-check => first check the playbook
+
+=> Ansible-playbook create_a_file.yml --private-key=.pem 
+		
+============================================================================================
+
+		
+2) Create a file with content
+
+vim create_a_file_with_content.yml
+
+---
+- hosts: all
+  tasks:
+  - name: create a file with content
+    copy:
+      dest: /home/ec2-user/secondfile.txt
+       content:
+         krishna reddy
+         bangalore
+         Associate consultant
+
+:wq!
+
+ => Ansible-playbook create_a_file_with_content.yml --private-key=ansible.pem --syntax-check => first check the playbook
+ 
+=> Ansible-playbook create_a_file_with_content.yml --private-key=.pem 
+
+==========================================================
+
+3) create a multiple files at a time 
+
+vim create_a_multiple_files
+
+---
+- hosts: node
+  tasks:
+  - name: create a multiple files with permissions
+    file:
+	 path: "/home/ec2-user/thirdfile.txt{{item}}"
+	 state: touch
+	 mode: 544
+  with_items:
+    - access.log
+    - systemd.log
+    - properties.txt
+    - conffile.conf
+
+:wq!
+
+=> Ansible-playbooks playbook name -i /etc/ansible/hosts --private-key=.pem --syntax-check
+
+The above command i means inventory file we can create own inventory file and give path location while running that command
+
+=> Ansible-playbook playbook name .pem file
+
+=====================================================================================
+
+4) create multiple file with permissions
+
+
+vim create_multiple_files_with_permissions
+
+---
+- hosts: all
+  tasks:
+  - name: create a multiple files with permissions
+     file:
+     path: "/home/ec2-user/{{ item.location }}"
+     state: touch
+     mode: "{{ item.mode }}"
+ with_items:
+   - { locaton: 'task4_file.txt', mode: '544' }
+   - { location: 'task4_secondfile.txt', mode: '766' }
+
+:wq!
+
+
+ => Ansible-playbook playbook name --private-key=.pem --syntax-check 
+
+ => Ansible-playbook playbook name --private-key=.pem 
+
+
+======================================================================================
+
+5)  I want to deploy .war file through apache tomcat server
+
+vim deploy_war_in_tomcat_server
+
+
+---
+- host: localhost
+  become: yes
+  tasks:
+  - name: clone git repository
+    git: 
+	  repo: give project URL
+	  dest: /home/ec2-user/
+	  update: yes
+	  version:
+ - name: packaging the maven build
+   shell: " mvn clean package " 
+   args:
+     chdir: /home/ec2-user/
+ - name: copy artifacts to tomcat 	 
+   copy:
+   src: /home/ec2-user/warfile
+   dest: /usr/share/tomcat/webapps/
+ - name: restart httpd
+   service: 
+      name: tomcat
+      state: restarted
+:wq!
+
+ => Ansible-playbook playbook name .pem file --syntax-check
+
+ => Ansible-playbook playbook name .pem file 
+
+
+========================================================================================= 
+6) INSTALL GMAVEN
+
+
+vim install_maven
+
+---
+- hosts: nodes
+  become: yes
+  tasks:
+  - name: installing maven
+     shell: |
+	   wget give here maven URL
+	   sed -i s/\$releaseever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+       yum install apache-maven -yes
+
+:wq!
+
+
+  => Ansible-playbbok playbook name --private-key=.pem --syntax-check
+
+  => Ansible-playbook playbook name .pem 
+
+===================================================================================
+
+### Ansible Tags Roles Galaxy 
+
+=> Tags :
+
+
+so we are using tags purpose we can do include and exclude also we are using.
+ 
+
+6) install git through playbook
+
+
+vim git_install.yml
+
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: installing git
+      yum:
+        name: git
+        state:present
+	  tags: install
+    - name: uninstall git
+      yum: 
+        name: git 
+        state: absent
+      tags: uninstall	   
+     
+:wq!
+
+  => Ansible-playbook playbook name .pem file --skip-tags "uninstall" =>this means install only git
+  
+  => Ansible-playbook playbook name .pem file --skip-tags "install" => this means uninstall git
+  
+ 
+ like we want skip install we can use skip that command like above command
+ 
+ 
+  => Ansible-playbook playbook name .pem file 
+  
+
+=>Ansible Roles 
+
+=> Will divide the this playbook into small peaces that is called we are calling as a role 
+
+Like install git one role install maven one role install nginx one role 
+
+A role enables the sharing and reuse of ansible tasks. it contains ansible playbook tasks, plus all the supporting files,
+variables,templates, and handlers needed to run the tasks.a role is a complete unit of automation that can be re used and shared 
+
+=> In particular terms a role is a directory structure containing all the files,variables,handlers,jinja templates, and 
+tasks needed to automate a workflow. when a role is created the default structure contains 
+
+If you give this command the default structure will available "tree"
+
+tasks is the main folder
+ 
+task: Contains the main list of tasks to be executed by the role 
+
+handlers: contains handlers which may be used this role or even anywhere outside this role 
+
+defaults: default variable for the role 
+
+vars: other variables for the role 
+
+files: contains file which can be deployed via this role 
+
+templates: contains templates which can be deployed via this role 
+
+meta data: defines some metadata for this role   
+    
+##################################################################################
+
+
+### Ansible galaxy
+-------------------- 
+
+=> Ansible galaxy one of the stored repository like as docker hub 
+
+We will store play books and roles and some data will stored into that galaxy 
+
+ 
+=>Create the role using Galaxy 
+
+=> Ansible-galaxy init ansible_test 
+
+cd /ansible_test 
+
+ls -lrt
+
+	   
+
+=============================================================================================
+
+### Ansible Vault | Mail Notification 
+
+Basically Ansible vault is using for the secure data for exm we can make playbook secure level 
+
+vault can use for our encrypted sensitive data like secret key sshkey playbooks credentials 
+
+=>Creating ansible vault 
+
+=>ansible-vault create linux.txt 
+
+=>cat filename ->you can't able to see inside the file data because it's encrypted file 
+
+=>ansible-vault edit filename =>then only you can able to see 
+
+=>ansible-vault view filename 
+
+=>ansible-vault rekey filename ->this is change the password 
+   
+=>ansible-vault decrypt filename 
+
+=>  ansible-vault playbookname --private-key=.pemfile --ask-vault-pass 
+
+*** Create one role using galaxy 
+
+=> ansible-galaxy init role1
+=>cd role1 
+
+where we need to write some sensitive data  
+
+vim /vars/main.yml 
+
+username: krishna
+
+password: krish@123
+
+:wq!
+
+=>ansible-vault encrypt /vars/main.yml 
+
+=>ansible-vault view /vars/main.yml 
+
+*** if you don't know password you can't do anything this is the disadvantage 
+
+=>cd ../tasks
+
+vim main.yml - name: get the username
+  debug:
+   msg: "myname is {{ username }}"
+
+:wq!
+
+=>ansible-playbook playbookname --private-key=.pemfile --ask-vault-pass 
+
+Writhe the playbook and sent out the output report through mail
+
+
+======================================================================
+
+### Ansible Tower 
+
+What is the use of Ansible Tower?
+
+Ansible Tower is the easy-to-use UI and dashboard and REST API for Ansible. Centralize your Ansible infrastructure 
+from a modern UI, featuring role-based access control, job scheduling, and graphical inventory management. 
+Tower's REST API and CLI make it easy to embed Tower into existing tools and processes.
+
+#######################################################################
+
+### How to install Ansible tower 
+---------------------------------
+
+
+Step 1: Update system and add EPEL repository
+
+=> sudo yum -y update
+
+=> sudo yum -y install epel-release
+
+
+Ansible Tower uses Ansible playbook to deploy itself so we also need Ansible installed.
+
+
+=> sudo yum -y install ansible vim curl
+
+
+Step 2: Download Ansible Tower archive
+
+
+=> mkdir /tmp/tower && cd  /tmp/tower
+
+=> curl -k -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz 
+
+
+Extract downloaded archive.
+
+
+=> tar xvf ansible-tower-setup-latest.tar.gz
+
+
+Step 3: Install Ansible Tower
+
+
+=> cd ansible-tower-setup*/
+
+
+Edit inventory file to set required credentials.
+
+
+=> vim inventory
+
+admin_password='AdminPassword'
+
+pg_password='PgStrongPassword'
+
+rabbitmq_password='RabbitmqPassword'
+
+:wq!
+
+
+When done, start installation of Ansible Tower
+
+
+=> sudo ./setup.sh
+
+
+Step 4: Configure Ansible Tower
+
+
+You can configure Ansible Tower using:
+
+=> https://ip 
+
+Login as admin user and password set in the inventory file.
+
+Once you are logged in, you need to configure Ansible Tower license. 
+Browse to the license file and accept the terms. If you don’t have a license, get trial one
+
+Agree to the End User License Agreement and Submit to finish the installation.
+
+=================================================================================================
+
+
+
+
+
+
+
+
+

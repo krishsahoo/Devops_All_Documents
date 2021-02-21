@@ -1,0 +1,295 @@
+
+
+1) Explain what AWS is?
+
+> AWS stands for Amazon Web Service; it is a collection of remote computing services also known as a 
+cloud computing platform.  
+> This new realm of cloud computing is also known as IaaS or Infrastructure as a Service.
+
+
+=============================================================
+=============================================================
+
+EC2 Services 
+--------------
+
+
+2) what is ec2 ??
+
+> Ec2 stands for elastic compute cloud, it provides scalable computing capacity in the AWS cloud.
+> you can develop and deploy applications faster
+> you can use amazon ec2 to launch as many servers as you need 
+> it is configure secuerity and networking and manage storage 
+
+
+3)What are the different types of instances?
+
+General purpose
+Computer Optimized
+Memory Optimized
+Storage Optimized
+Accelerated Computing
+
+
+5) While connecting to your instance what are the possible connection issues one might face?
+
+Connection timed out
+User key not recognized by the server
+Host key not found, permission denied
+An unprotected private key file
+Server refused our key or No supported authentication method available
+Error using MindTerm on Safari Browser
+Error using Mac OS X RDP Client
+====================================================
+
+===========================================================
+
+VPC Services 
+------------
+
+ 
+ 
+ 
+1)  What is VPC?
+-----------------
+VPC stands for Virtual Private Cloud. It allows to customize your networking configuration.  It is a network which
+is logically isolated from another network in the cloud. It allows you to have your IP address range,  
+internet gateways,subnet and security groups.
+
+2) What is the use of VPC in AWS?
+----------------------------------
+Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've 
+defined. This virtual network closely resembles a traditional network that you'd operate in your own data center,
+with the benefits of using the scalable infrastructure of AWS.
+
+3) How do I connect to AWS VPC?
+---------------------------------
+Create a customer gateway. Open the Amazon VPC console. ...
+Create a virtual private gateway. In the VPC console, under VPN Connections, choose Virtual Private Gateways. ...
+Create a VPN connection. ...
+Get the VPN connection configuration and configure your customer gateway.
+
+==============================================================================
+
+1) what is subnet 
+--------------------
+A public subnet is a subnet that's associated with a route table that has a route to an Internet gateway. 
+A private subnet with a size /24 IPv4 CIDR block (example: 10.0. 1.0/24). ... An Internet gateway. 
+This connects the VPC to the Internet and to other AWS services.
+
+2) What is the use of subnet in AWS?
+------------------------------------
+A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. A subnet is a range of IP addresses in your VPC.
+A route table contains a set of rules, called routes, that are used to determine where network traffic is directed.
+
+
+============================================================
+
+=> Storage services
+
+
+1) Explain what S3 is?
+-----------------------
+
+S3 stands for Simple Storage Service. You can use S3 interface to store and retrieve any amount of data, 
+at any time and from anywhere on the web
+
+ -----------------------------------------
+
+S3 is a REST service, and you can send a request by using the REST API or the AWS SDK wrapper libraries 
+that wrap the underlying Amazon S3 REST API.
+
+3)Explain default storage class in S3
+-----------------------------------
+
+The default storage class is a Standard frequently accessed.
+
+
+ 
+4) What are the storage class available in Amazon s3?
+-----------------------------------------------
+Amazon S3 standard
+Amazon S3 standard-infrequent Access
+Amazon S3 Reduced Redundancy Storage
+Amazon Glacier
+
+6) How many buckets can you create in AWS by default?
+--------------------------------------
+
+By default, you can create up to 100 buckets in each of your AWS accounts.
+
+===========================================================================
+
+1)what is ebs??
+
+ebs stands for Elastic Block Store is an easy to use, high-performance, block-storage service designed for use 
+with Amazon Elastic Compute Cloud (EC2) for both throughput and transaction intensive workloads at any scale.
+
+
+1)What is AWS EBS used for?
+----------------------------------
+AWS Elastic Block Store (EBS) is Amazon's block-level storage solution used with the EC2 cloud service to store persistent data
+This means that the data is kept on the AWS EBS servers even when the EC2 instances are shut down.
+
+2) What is the difference between s3 and EBS?
+--------------------------------------------------
+EBS delivers high-availability block-level storage volumes for Amazon Elastic Compute Cloud (EC2) instances.
+Finally, Amazon S3 is an object store good at storing vast numbers of backups or user files. Unlike EBS or EFS, 
+S3 is not limited to EC2.
+
+
+3)What are the types of EBS?
+--------------------------------
+The three types  
+1)throughput optimized  HDD (st1)
+2)Provisioned IOPS (SSD) 
+3)General Purpose (SSD) EBS volumes.
+All three have their merits and offer similar functionalities, such as snapshot capabilities, 
+though they differ largely in cost and performance.
+
+==================================================================
+
+1) What is volume  
+----------------------
+An Amazon EBS volume is a durable, block-level storage device that you can attach to one instance or to 
+multiple instances at the same time. You can use EBS volumes as primary storage for data that requires 
+frequent updates, such as the system drive for an instance or storage for a database application.
+
+2)What is volume snapshot in AWS?
+-----------------------------------
+An EBS snapshot is a point-in-time copy of your Amazon EBS volume, which is lazily copied to Amazon Simple 
+Storage Service (Amazon S3). EBS snapshots are incremental copies of data. This means that only unique blocks 
+of EBS volume data that have changed since the last EBS snapshot are stored in the next EBS snapshot
+
+==================================================================================
+
+1) What is snapshot in AWS ec2?
+----------------------------------
+One of the methods that Amazon Web Services (AWS) recommends for protecting Elastic Compute Cloud (EC2) instances 
+is the creation of snapshots.Instead, a snapshot is a copy of the storage blocks that have been modified since 
+the previous snapshot was created
+
+2) What is the difference between image and snapshot in AWS?
+--------------------------------------------------------------
+A snapshot is a backup copy of any EBS volume, and is saved in S3 storage. An Amazon Machine Image is a snapshot 
+of an EBS volume with an Operating System on it. ... At launch time, the EBS volumes of the new instance are 
+copies of those snapshots and mapped to the instance as defined by the AMI.
+
+=====================================================================================
+
+1)What is AMI?
+----------------
+AMI stands for Amazon Machine Image.  It’s a template that provides the information 
+(an operating system, an application server, and applications) required to launch an instance, 
+which is a copy of the AMI running as a virtual server in the cloud.  
+You can launch instances from as many different AMIs as you need.
+
+2) Mention what the relationship between an instance and AMI is?
+------------------------------------------------------------
+From a single AMI, you can launch multiple types of instances.  An instance type defines the hardware of the host 
+computer used for your instance. Each instance type provides different computer and memory capabilities.  Once you 
+launch an instance, it looks like a traditional host, and we can interact with it as we would with any computer.
+
+3) What does an AMI include?
+-------------------------------
+A template for the root volume for the instance
+Launch permissions decide which AWS accounts can avail the AMI to launch instances
+A block device mapping that determines the volumes to attach to the instance when it is launched
+
+==============================================================================================
+
+
+=============================================================
+
+1) What is security group? 
+---------------------------------
+Security groups are used to collect user accounts, computer accounts, and other groups into manageable units. 
+In the Windows Server operating system, there are several built-in accounts and security groups 
+that are preconfigured with the appropriate rights and permissions to perform specific tasks
+
+2) How does a security group work?
+------------------------------------
+A security group acts as a virtual firewall for your instance to control inbound and outbound traffic.
+For each security group, you add rules that control the inbound traffic to instances, and a separate set of 
+rules that control the outbound traffic.
+
+
+3) What is inbound and outbound in security group
+-----------------------------------------------
+For example, an inbound rule might allow traffic from a single IP address to access the instance, 
+while an outbound rule might allow all traffic to leave the instance. Because security groups function at the 
+instance level of a VPC, each security group can be applied to one or more instances, even across subnets
+
+==================================================================================================
+
+1) What is IAM role in AWS?
+---------------------------
+An IAM role is an IAM identity that you can create in your account that has specific permissions.
+You can use roles to delegate access to users, applications, or services that don't normally have access 
+to your AWS resources.
+
+2) How do I use IAM in AWS?
+----------------------------
+Getting Set Up.
+Creating an IAM Admin User and Group. Creating a Delegated User. ...
+Delegate Access to the Billing Console. Delegate Access Across AWS Accounts Using Roles. ...
+Best Practices and Use Cases. Business Use Cases.
+IAM Console and Sign-in Page. ...
+Identities. ...
+Access Management. ...
+Access Analyzer.
+
+3) What does IAM mean?
+------------------------
+An acronym for Identity and Access Management, IAM refers to a framework of policies and technologies for ensuring 
+that the proper people in an enterprise have the appropriate access to technology resources. Also called identity 
+management (IdM), IAM systems fall under the overarching umbrella of IT security.
+
+==========================================================================
+
+1)What is AWS Route 53 used for?
+---------------------------------
+Amazon Route 53 effectively connects user requests to infrastructure running in AWS – such as Amazon EC2 instances, 
+Elastic Load Balancing load balancers, or Amazon S3 buckets – and can also be used to route users to infrastructure 
+outside of AWS
+
+2) How does AWS Route 53 work?
+-------------------------------
+Amazon Route 53 is a web service which is a highly available and scalable Domain Name System (DNS) 
+It is a Domain Name System (DNS) which translates domain names into IP addresses to direct traffic to your website. 
+
+=============================================================================
+1) What is role 
+-----------------
+An IAM role is an IAM identity that you can create in your account that has specific permissions 
+You can use roles to delegate access to users, applications, or services that don't normally have access 
+to your AWS resources.
+
+
+2) What is role and policy in AWS?
+-------------------------------------
+You manage access in AWS by creating policies and attaching them to IAM identities (users, groups of users, or roles) 
+or AWS resources. A policy is an object in AWS that, when associated with an identity or resource, defines 
+their permissions.
+
+=====================================================================================================
+
+1) What is load balancing 
+-------------------------
+Elastic Load Balancing automatically distributes incoming application traffic across multiple targets, such as 
+Amazon EC2 instances, containers, IP addresses, and Lambda functions. It can handle the varying load of your 
+application traffic in a single Availability Zone or across multiple Availability Zone
+
+2) What is the use of load balancer in AWS?
+----------------------------------------------
+A load balancer serves as the single point of contact for clients. The load balancer distributes incoming 
+application trafficacross multiple targets, such as EC2 instances, in multiple Availability Zones. 
+This increases the availability of your application. You add one or more listeners to your load balancer.
+
+3) What are the types of load balancing?
+-----------------------------------------
+Load Balancer Types. Elastic Load Balancing supports the following types of load balancers: Application Load 
+Balancers, Network Load Balancers, and Classic Load Balancers. Amazon ECS services can use either type of load 
+balancer.Application Load Balancers are used to route HTTP/HTTPS (or Layer 7) traffic.
+ 
+ 

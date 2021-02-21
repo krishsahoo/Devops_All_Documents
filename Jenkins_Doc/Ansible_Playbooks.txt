@@ -1,0 +1,232 @@
+
+Playbooks
+
+
+1)Create empty file 
+
+---
+- hosts: nodename
+  tasks:
+  - name: create empty file 
+      path: "/home/redhat/file1.txt"
+	  state:touch
+	become: root 
+
+=====================================================
+
+2)Creating the file with content 
+
+---
+
+- hosts: nodename
+  become: root
+  tasks:
+  - name: create file with content 
+      copy:
+        dest: "/your path"
+        content:
+           this is my playbook
+           i am writing somecontent for new file
+==========================================================
+
+3)creating multiple files
+
+---
+
+- hosts: nodename
+  become: root
+  tasks:
+  - name: create multiple files 
+      file:
+        path: "/home/file1.txt{{ item }}"
+        state: touch 
+      with_items:
+	  - file1.txt
+	  - file2.txt
+	  - file3.txt 
+	  
+===============================================================
+
+4)creating a directory 
+
+---
+- hosts:
+  become: root
+  tasks:
+    - name: creating a directory 
+        file:
+        path: "/home/second"
+        state: directory
+=============================================================
+
+5)Removing files 
+
+---
+- hosts: 
+  become: root
+  tasks:
+     - name: removing a file
+       file:
+         path: "/your path"
+         state: abscent
+===================================================
+
+6)Creatin a new file with permissions 
+
+
+---
+- hosts:
+  become: root
+  tasks:
+     - name: creating a file with permissions 
+       file:
+         path: "/your path"
+         state: touch 
+         mode: 0655
+         owner: your owner 
+========================================
+7) create multiple files and give permission to every file 
+
+
+---
+- hosts: 
+  become: root name 
+  tasks:
+     - name: create a multiple files and given to every file permission 
+       file:
+         path: "{{ item.location }}"
+         state: touch 
+         mode: "{{ item.mode }}"
+       with_items:
+	      - { location: 'filename.txt', mode: '544' }
+          - { location: 'file2.txt', mode: '600' }		  
+
+===============================================================
+
+8)service httpd start,stop,restarted & Install Uninstall
+
+---
+
+- hosts: node name
+  become: root name
+  tasks:
+    - name: service start httpd 
+      service: 
+           name: httpd
+           state: started 
+
+
+
+---
+
+- hosts: node name
+  become: root name 
+  tasks:
+     - name: service start jenkins
+       service: 
+            name: jenkins 
+			pattern: "you jenkins location"
+            state: started 
+
+
+---
+
+====================================================
+ 9) Install git 
+ 
+ ---
+ - hosts: node name 
+   become_user: root name
+   tasks:
+      - name: install the git 
+	    yum:
+		 name: git
+		 state: present
+		 update_cache: yes
+		 
+=======================================================
+
+10) install maven 		 
+
+---
+
+- hosts:
+  become: 
+  tasks:
+     - name: install the maven 
+	   shell:
+	     name: mvn
+		 wget given here url for download mvn 
+		 sed -i s/\$releaseever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+		 
+	   yum install maven -yes 
+
+==============================================================
+
+11) install the jenkins 
+
+
+---
+
+- hosts: jenkins
+  become: true
+  tasks:
+  - name: install jenkins 
+    gather_facts: false 
+  - import_role:
+    name: jenkins  
+
+  - name: install wget
+     yum:   
+	  name: wget 
+	  state: present 
+	  
+  - name: install openjdk 
+    yum: 
+      name: java-1.8.0-openjdk
+      state: present 
+	  
+  - name: download jenkin.repo 
+    get_url:
+     url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo	
+	 dest: /etc/yum.repos.d/jenkins.repo 
+	 
+  - name: import jenkins key 
+    rpm_key:
+    state: present 
+    key:  http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+	
+  - name: install jenkins 	
+     yum:
+	 name: jenkins 
+	 state: present 
+	 
+  - name: start jenkins 
+      systemd:
+       name: jenkins
+       state: started 
+	   
+  - name: enable jenkins 
+    systemd:
+     name: jenkins
+     enabled: true 
+	 
+  - name: sleep for 30 seconds and continue with play 
+    wait_for:timeout=30
+    delegate_to:hostname 
+	
+  - name: initpasswordjenkin
+    shell:cat/var/lib/jenkins/secrets/initialadminpassword
+    changed_when: false 
+    register: result 
+
+ - name: print initpassword jenkins 
+   debug:
+    var: result.stdout                                
+	
+Note: "stdout means specified the password of result.stdout" 	
+
+ansible-playbook -i inventory file path
+
+===============================================================
+	

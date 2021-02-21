@@ -1,0 +1,240 @@
+
+
+Declarative Pipeline fundamentals
+===================================
+1) pollSCM
+
+pipeline {
+
+ agent any {
+ 
+ triggers {
+   
+   cron (*****)
+   
+   }
+   
+   stages {
+    
+	stage ('hello world') {
+	 
+	  steps {
+	  
+	  echo 'hello world'
+	  
+	  }
+	 }
+	}
+   }
+   
+   
+   
+ Cron_tab Timings:
+ 
+ 
+
+* * * * * command(s)
+- - - - -
+| | | | |
+| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
+| | | ------- Month (1 - 12)
+| | --------- Day of month (1 - 31)
+| ----------- Hour (0 - 23)
+------------- Minute (0 - 59) 
+ 
+--------------------------------------------------------------------
+=> Environment variable
+
+pipeline {
+ 
+  agent any
+
+
+     environment  {
+   
+         USE_JDK = 'true'
+         JDK = 'c:/java/jdk1.8'
+       }
+
+         stages {
+           stage('Build') { 
+             steps {
+               
+                sh 'printenv'
+               }
+              }
+             }
+            }
+			
+
+
+--------------------------------------------------------------------
+
+pipeline {
+    agent 
+	
+    stages {
+        stage('compile') { 
+            steps {
+               withmaven(maven : 'maven_3_5_0')
+               sh 'mvn clean compile'
+             }			   
+           }
+        }
+		
+        stage('Testing') { 
+            steps {
+               withmaven(maven : 'maven_3_5_0')
+			   sh 'mvn test'
+			   }
+            }
+        }
+        stage('Deployment') { 
+            steps {
+                withmaven(maven : 'maven_3_5_0')
+				sh 'mvn deploy'
+				}
+            }
+        }
+    }
+}
+
+
+------------------------------------------------------------------------
+
+pipeline {
+         agent any
+         stages {
+                 stage('One') {
+                 steps {
+                     echo 'Hi, this is Zulaikha from edureka'
+                 }
+                 }
+                 stage('Two') {
+                 steps {
+                    input('Do you want to proceed?')
+                 }
+                 }
+                 stage('Three') {
+                 when {
+                       not {
+                            branch "master"
+                       }
+                 }
+                 steps {
+                       echo "Hello"
+                 }
+                 }
+                 stage('Four') {
+                 parallel { 
+                            stage('Unit Test') {
+                           steps {
+                                echo "Running the unit test..."
+                           }
+                           }
+                            stage('Integration test') {
+                              agent {
+                                    docker {
+                                            reuseNode true
+                                            image 'ubuntu'
+                                           }
+                                    }
+                              steps {
+                                echo "Running the integration test..."
+                              }
+                           }
+                           }
+                           }
+              }
+}
+
+
+
+==========================================================================
+
+pipeline {
+
+    agent {
+	
+	   label "master" {
+	   
+	   tools : //Note : this should match with the tool name configured in your jenkins instance "Maven"
+	   
+	 environment {
+	 
+	           //this should be nexus version 3
+			   NEXUS_VERSION : "nexus3"
+			   //this should be http or https 
+			   NEXUS_PROTOCOL : http 
+			   //where your nexus is running 
+			   NEXUS_URL : "localhost:8080"
+			   //repository where we will upload the artifact
+			   NEXUS_REPOSITORY : "java_spring"
+			   //jenkins credentialid to authenticate to nexus oss 
+			   NEXUS_CREDENTIALID : "username, password"
+			   
+		  }
+	      stages {
+	          stage('clone code') {
+		         steps {
+			      // Let's clone the source  
+				    Git_URL : 
+				  }
+				 }
+				}
+				stage {
+				   steps('build with maven') {
+				       withmaven('mavenversion : 3_5_0')
+					   sh 'mvn clean install'
+					   }
+					  }
+					 }
+					 stage {
+					    steps('publish to nexus') {
+						// if the artifact name is exists
+				        artifactExists = fileExists artifactpath;
+				        if(artifactExists)  {
+				        echo "*** File: ${artifactpath}, group: ${pom.groupid}, packaging: ${pom.packaging}, version ${pom.version}
+						}
+					  }
+					}
+					
+					stage ("deploy") {
+                     steps {
+                         script {
+                             bat ''' F:\\devops\\softwares\\curl-7\\bin\\curl give here nexus war file path 
+                       }
+
+                    }
+                }
+            }
+         }
+===================================================================
+
+
+Scripted Pipeline fundamentals
+================================
+
+1) node {  
+    stage('Build') { 
+        // 
+    }
+    stage('Test') { 
+        // 
+    }
+    stage('Deploy') { 
+        // 
+    }
+}
+
+-------------------------------------------
+
+2)Scripted_Example_Script:
+
+node { // node/agent
+  stage('Stage 1') {
+    echo 'Hello World' // echo Hello World
+  }
+}
+
+================================================================================

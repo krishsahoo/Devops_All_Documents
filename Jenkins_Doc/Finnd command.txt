@@ -1,0 +1,163 @@
+Find Command
+=======
+
+what type of files directories
+
+f - regular file
+
+d - directory
+
+l - symbolic link
+
+c - character devices
+
+b - block devices
+
+1 find / -type c
+For instance, if we wanted to find all of the character devices on our system, we could issue this command:
+
+2 find / -type f -name "*.conf"
+We can search for all files that end in ".conf" like this:
+
+Size
+
+c: bytes
+k: Kilobytes
+M: Megabytes
+G: Gigabytes
+b: 512-byte blocks
+
+3 To find all files that are exactly 50 bytes, type:
+  
+  find / -size 50c  
+  
+
+4  To find all files less than 50 bytes, we can use this form instead:
+
+find / -size -50c
+
+
+5 To Find all files more than 700 Megabytes, we can use this command:
+
+     find / -size +700M
+
+
+Time
+
+Access Time: Last time a file was read or written to.
+Modification Time: Last time the contents of the file were modified.
+Change Time: Last time the file's inode meta-data was changed.
+
+1 find / -mtime 1
+   If we want files that were accessed in less than a day ago, we can type:
+
+find / -atime -1
+To get files that last had their meta information changed more than 3 days ago, type:
+
+find / -ctime +3
+
+
+There are also some companion parameters we can use to specify minutes instead of days:
+
+find / -mmin -1
+This will give the files that have been modified type the system in the last minute.
+
+Find can also do comparisons against a reference file and return those that are newer:
+
+find / -newer myfile
+
+
+Finding by Owner and Permissions
+
+You do this by using the "-user" and "-group" parameters respectively. Find a file that is owned by the "syslog" user by entering:
+
+find / -user syslog
+Similarly, we can specify files owned by the "shadow" group by typing:
+
+find / -group shadow
+We can also search for files with specific permissions.
+
+If we want to match an exact set of permissions, we use this form:
+
+find / -perm 644
+This will match files with exactly the permissions specified.
+
+If we want to specify anything with at least those permissions, you can use this form:
+
+find / -perm -644
+This will match any files that have additional permissions. A file with permissions of "744" would be matched in this instance.
+
+
+Filtering by Depth
+
+You can specify the maximum depth of the search under the top-level search directory:
+
+find -maxdepth num -name query
+
+To find "file1" only in the "level1" directories and above, you can specify a max depth of 2 (1 for the top-level directory, and 1 for the level1 directories):
+
+find -maxdepth 2 -name file1
+
+You can also specify a minimum directory if you know that all of the files exist past a certain point under the current directory:
+
+find -mindepth num -name query
+
+We can use this to find only the files at the end of the directory branches:
+
+find -mindepth 4 -name file
+
+You can combine the min and max depth parameters to focus in on a narrow range:
+
+find -mindepth 2 -maxdepth 3 -name file
+
+
+
+Executing and Combining Find Commands
+
+You can execute an arbitrary helper command on everything that find matches by using the "-exec" parameter. This is called like this:
+
+find find_parameters -exec command_and_params {} \;
+The "{}" is used as a placeholder for the files that find matches. The "\;" is used so that find knows where the command ends.
+
+For instance, we could find the files in the previous section that had "644" permissions and modify them to have "664" permissions:
+
+cd ~/test
+find . -type f -perm 644 -exec chmod 664 {} \;
+We could then change the directory permissions like this:
+
+find . -type d -perm 755 -exec chmod 700 {} \;
+If you want to chain different results together, you can use the "-and" or "-or" commands. The "-and" is assumed if omitted.
+
+find . -name file1 -or -name file9 
+
+
+
+Find Files Using Locate
+
+
+You can install the command with apt-get:
+
+sudo apt-get update
+sudo apt-get install mlocate
+The reason locate is faster than find is because it relies on a database of the files on the filesystem.
+
+The database is usually updated once a day with a cron script, but you can update it manually by typing:
+
+sudo updatedb
+Run this command now. Remember, the database must always be up-to-date if you want to find recently acquired or created files.
+
+To find files with locate, simply use this syntax:
+
+locate query
+You can filter the output in some ways.
+
+For instance, to only return files containing the query itself, instead of returning every file that has the query in the directories leading to it, you can use the "-b" for only searching the "basename":
+
+locate -b query
+To have locate only return results that still exist in the filesystem (that were not removed between the last "updatedb" call and the current "locate" call), use the "-e" flag:
+
+locate -e query
+To see statistics about the information that locate has cataloged, use the "-S" option:
+
+locate -S
+

@@ -1,0 +1,243 @@
+
+
+Aws_Practise
+===============
+
+Concepts:
+----------
+1)Amazon Ec2   
+
+2)Storage Services and Aws cli 
+
+3)Vpc & Direct Connect
+
+4)Database Services => 
+
+5)Elb and Auto scaling 
+
+6)Route 53 & Management Tools
+
+7)Application Services Lambda & Beanstalk
+
+8)OpsWorks security & Identity Services 
+
+9)Mock Test & Doubt Cleaning Session 
+
+========================================================
+
+1) EC2:
+
+=> it's a shared pool of configurable computing resources exm:Networks, Servers, Storage, Applications, and Services 
+
+*** How to launch the servers 
+
+=> First we go to aws dashboard
+
+=> Choose AMI which server you need to get like windows or linux or Ubuntu 
+
+=> Choose an instance type like t2micro, t2 medium, t2 large, t2 small 
+
+=> Configure the Instance 
+
+ You need to select vpc ,Subnet if you have there 
+ 
+=> Add Storage 
+
+=> Add Tags
+
+=> Configure Secuerity Group 
+
+ This is actually firewall 
+ If you have your own firewall then you can select it otherwise if you want you can create your own secuerity group 
+ 
+=> Review Launch Instance 
+
+=> Select AWS Key pair and download it becauese you need to login the launched server 
+
+=>So finally launched the server 
+
+=====================================================================================
+
+*** How to launch the windows server
+
+This server also able launch aabove steps but after launching the windows server you need to create username password 
+
+Go to => Actions -> under select the -> create password for windows server option 
+
+After creating password it will show username and password for windows server 
+
+=>Go to Remote Desktop Connection give username password then you can able to login the server 
+
+======================================================================================================
+
+### How to change Instance resizing 
+
+Example: If your t2.micro instance is too small for its workload, you can change it to an m3.medium instance 
+
+=> If services are launched then you need to select server and stop that server
+
+=> go to ->Actions ->Instance Setting->Change Instance type->Select Instance Type -> Save& Exit 
+
+=> Now able to login and check weather instance type is changed or what 
+
+=================================================================
+
+### Can we change an EC2 instance from one region to another region ??
+
+No It's not possible if you want you should take backup means "create an AMI instead of that server" and you can restore it 
+into that particular region 
+
+==================================================================
+### How we can EC2 purchasing Option 
+
+=> There are 3 EC2 purchasing options offered by AWS : On Demand, Reserved and spot instances 
+
+================================================================
+
+### What is EC2 Instance Metadata 
+
+=>Used to configure or manage the running instance 
+
+=> Includes metadata about the instance such as instance id, AMI id, hostname, IP Address, Role 
+
+=>Can be accessed from "CURL http://ip/latest/meta-data/"
+
+===========================================================================
+
+
+
+### Module 2:
+=================
+
+2) Storage Services and Aws Cli :
+------------------------------
+Volume vs vault 
+
+Volume : It's a storage device, that is formatted to store directories and files for frequent use. e.g. fixed disk, CD-ROM etc.
+
+vault: A storage box or a container which stores the archive data for longer period of time 
+
+
+## What is cloud storage 
+
+A cloud storage is a service model in which data is 
+
+ maintained
+ managed
+ backedup remotely 
+ made available to users over a network 
+ 
+users pay for their cloud data storage on either 
+  
+ pay per use 
+ monthly rate 
+
+There are 2 types of storage between in AWS 
+
+1) Block Storage 
+
+2) Object Storage (S3, Glacier) 
+
+1)Block Storage : A block storage is known as Elastic block Storage 
+
+2) Object Storage: object storage is known as S3 (simple storage service) 
+
+Glacier : glacier has long term archibale solution  
+
+
+So EBS comes under "Tier 0 nd Tier 1" High performing and high cost 
+
+S3 comes under "Tier 2" It's also high performing but it's not a block storage we can't use that one to install 
+the updating system applications database we can only store or files on it 
+
+"Tier 3" This is actually slow storage in cloud if i compare that how quickly even to read file format 
+
+
+### AWS Connecting Storage 
+
+Data can be transferred through internet also but it will be slow and cost 
+
+1) Storage gateway : Integrates on premises IT environments with AWS storage (storage transfer limit=32 TB )
+
+2) snow ball : A service that enables large-volume data transfer storage limit=80 TB
+
+ 
+
+### Common Terms 
+
+=> Disk 
+
+SSD (Solid state Drive) A storage device containing non-volatile flash memory, used in place of a hard disk because of its 
+much greater speed 
+
+
+=> Performance 
+
+IOPS (I/O Operation Per Second)  I/O Means input output operations per second like computer storage devices HDD, SSD etc..
+
+Disk I/O : It displays what percentage of time a disk is in use by a readf or write command 
+
+
+=> MEMORY
+
+  -> TiB (Tebibyte): 1 TiB = 1.10 TB = 1024 Gigabytes, 1 Terabyte= 1000 Gigabyte 
+  
+  -> GiB (Gigibyte): 1 GiB= 1.07 GB =1024 Mebibytes, 1 Gigabyte=1000 Megabyte 
+  
+  -> MiB (Megibyte): 1 Mib= 1.05 MB = 1024 Kibibytes, 1 Megabyte=1000 Kilobyte 
+  
+  
+### EBS (Elastic Block Storage) 
+
+=>Provides block level storage volumes for EC2 instances 
+
+=> When to use it 
+
+ -> Data Changes Frequently 
+ -> Require long term persistence 
+ -> Database style applications that frequently encounter many random reads and writes across the data set 
+
+
+EBS VOLUME & Snapshot
+----------------------
+-> Primary storage for data that requires frequent updates or storage for a database applications
+
+-> EBS Snapshot
+
+  -> can backup the data on the ebs volumes to amazon s3 by taking point in time snapshot 
+  -> Snapshots are incremental backups 
+  -> Snapshots are encrypted volumes are automatically encrypted 
+  -> volumes that are created from encrypted snapshots are also automatically encrypted 
+
+LAB
+
+  -> create Volume instead of the created server
+
+  -> Go to EBS -> Volume->Select Volume Option 
+ 
+  -> Create volume and there give Availability Zone name for that created server Zone and create it 
+
+  -> After you have to attach the volume to that server 
+
+
+=================================================================
+
+### Add the Storage disk on server 
+--------------------------------
+
+=> lsblk  
+
+Create volume in AWS 
+
+=> Go to EBS -> volumes -> Create Volume -> Select Zone, Disk Size, save it
+
+=> Then you need to attach it to the particular server
+
+Volumes -> Actions -> Attach Volume -> select server name and save it 
+
+=> Go to linux command prompt check there "lsblk"
+
+=> After we need to create file system "ext" and making it mount on to that server device 
+
+=>  mkfs -t ext3 /dev/xvdb 
+

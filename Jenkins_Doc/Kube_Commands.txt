@@ -1,0 +1,36 @@
+Kubernetes Commands
+======================
+
+=> kubectl get nodes  =>get the nodes information 
+
+=> kubectl get pods   => get the pods information 
+
+=> kubectl describe pods  => get where pods are running
+
+=> kubectl delete pods pod-name => delete the pod object
+
+=> kubectl create -f deploy filename => deployment object is created 
+
+=> kubectl get deploy   =>get the deployment information for available current containers..
+
+=> kubectl describe pods | grep app =>check the app is attached to pods 
+
+=> kubectl create -f svc.ml    => Service deploy object is created
+
+=> kubectl get svc  => get the information about service object app 
+
+=> kubectl describe svc service object filename => get the all details about service object
+
+=>  kubectl get rs   => Find there how many replicas and all 
+
+=> kubectl create -f filename =>create the filename 
+
+=> kubectl apply -f filename  => run the modified file 
+
+=> kubectl rollout status deployment filename =>get it rollout options 
+
+=> kubectl rollout history deployment filename => find what you have used commands 
+
+=> kubectl rollout undo deployment filename --to-revision=1
+
+=> kubectl rollout status deployment filename 

@@ -1,0 +1,16 @@
+1)How should you run parallel jobs in jenkins ??
+------------------------------------------------
+
+-> Go to manage jenkins -> Manage plugins -> Available Option
+Search for multijob plugin,install and restart jenkins after download 
+
+-> Go to Manage jenkins -> configure system 
+->increase the number of executors
+->Now create a jenkins multijob project job
+->select multijob phase from build ->Add build step ->Multijob phase available 
+->Add multiple phase job in the build -> multijob phase section 
+->select running phase jobs in parallel in job execution type 
+->Now run the previously created multijob project job 
+
+----------------------------------------------------
+2)How will you add Email-Notifications in jenkins.xml 

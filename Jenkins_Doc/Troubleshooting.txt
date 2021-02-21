@@ -1,0 +1,58 @@
+
+APPLICATION TROUBLESHOOTING
+===========================
+
+
+=> DNS issues and network connectivity
+
+=> Slow servers and loading time
+
+=> Lack of load balancing
+
+
+1) How to trouble shoot DNS issues:
+=======================
+
+=> it means they can't able to communicating with the application then you may get the DNS issues
+
+We should resolve this issue interactive mode 2 non-interactive mode
+
+=> In non-interactive mode 
+
+Basically we can use Nslookup and dig command
+
+=>First check the hostname and all
+
+=> nslookup hostname =>check the ip address
+
+=> After that type there hostname only => then you can get result of hostname and ipaddress
+
+=> then set default domain name to hostname 
+
+=> set type=ns  
+
+=> type hostname => Then you can able to communicating with your application
+
+=> ls -d domain name =>just check there dns purpose
+
+========================================================================================
+
+2) How to trouble-shoot network connectivity issue
+
+++ Issue Website problem 
+
+++ The problem is Can't get to intranet again. page cannot be displayed
+
+=> ping ipaddress =>means check server is running or not
+
+=> arp -a =>it's shows the correct dynamic gateway Show we know the layers 1 & 2 good
+
+=> ping the hostname => hostname is notworking then you can get there all information like getting time out option and loss and all
+
+=> after that we can check that issues in This application "colasoft ping Tool"
+
+=> Give there Hostanme or ipaddress
+
+=> tracert -d  hostname => it will call to the gate way and pickup to the particular server
+============================================================================================
+

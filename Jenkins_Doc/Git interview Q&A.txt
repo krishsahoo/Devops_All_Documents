@@ -1,0 +1,193 @@
+1)What is GIT?
+
+GIT is a distributed version control system and source code management (SCM) system with an emphasis to handle 
+small and large projects with speed and efficiency.
+--------------------------------------------------------
+
+2)What is a repository in GIT?
+
+A repository contains a directory named .git, where git keeps all of its metadata for the repository. The content 
+of the .git directory are private to git.
+
+----------------------------------------------------
+
+3) What is the difference between GIT and SVN?
+
+Git-> Git is open source version control and Git is less preferred for handling extremely large files or frequently 
+changing binary files
+
+Svn-> SVN can handle multiple projects stored in the same repository.
+
+Git->GIT does not support ‘commits’ across multiple branches or tags
+
+Svn->Subversion allows the creation of folders at any location in the repository layout.
+
+Git->Gits are unchangeable
+
+Svn->Subversion allows committers to treat a tag as a branch and to create multiple revisions under a tag root.
+
+----------------------------------------------------------
+
+4)What are the advantages of using GIT?
+
+a) Data redundancy and replication
+
+b) High availability
+
+c) Only one.git directory per repository
+
+d) Superior disk utilization and network performance
+
+e) Collaboration friendly
+
+f) Any sort of projects can use GIT
+
+----------------------------------------------------------------
+
+5) What does commit object contain?
+
+a) A set of files, representing the state of a project at a given point of time
+
+b) Reference to parent commit objects
+
+c) An SHAI name, a 40 character string that uniquely identifies the commit object.
+
+-------------------------------------------------------------------
+
+6) What is ‘head’ in git and how many heads can be created in a repository?
+
+A ‘head’ is simply a reference to a commit object. In every repository, there is a default head referred 
+as “Master”.  A repository can contain any number of heads.
+
+
+-----------------------------------------------------------------
+
+7)What is Subgit? Why to use Subgit?
+
+a) It is much better than git-svn
+
+b)  No requirement to change the infrastructure that is already placed
+
+c) Allows to use all git and all sub-version features
+
+d) Provides genuine stress –free migration experience.
+
+------------------------------------------------------------------------------
+
+
+8)What is git Is-tree?
+
+‘git Is-tree’ represents a tree object including the mode and the name of each item and the SHA-1 value of the 
+blob or the tree.
+
+------------------------------------------------------------
+
+9)How git instaweb is used?
+
+Git Instaweb automatically directs a web browser and runs webserver with an interface into your local repository.
+
+-----------------------------------------------------------------
+
+10)What does ‘hooks’ consist of in git?
+
+ This directory consists of Shell scripts which are activated after running the corresponding Git commands. 
+For example, git will try to execute the post-commit script after you run a commit.
+
+-----------------------------------------------------
+
+11) What is ‘bare repository’ in GIT?
+
+To co-ordinate with the distributed development and developers team, especially when you are working on a project
+from multiple computers ‘Bare Repository’ is used. A bare repository comprises of a version history of your code.
+
+---------------------------------------------------------
+
+
+==========================================================
+
+==========================================================
+
+Git Commands & Issues
+------------------------
+
+.git init
+
+.git add . 
+.git commit -m "message"
+.git push
+ 
+.git branch 
+.git branch -a 
+.git branch branch-name
+.git checkout -m branch-name 
+.git branch -r
+.git branch -d branch-name 
+
+.git status 
+
+.git config --global user.email "mailid"
+.git config --global user.name "username"
+
+.git reset --soft commitid  =>set the HEAD to the intended commit but keep your changes staged from last commits
+.git reset --hard commitid =>set your HEAD on the commit you specify and reset all your changes from last commits including un committed changes last commits
+.git reset --mixed commitid =>it's same as git reset --soft but the only difference is it un stage your changes from last commits
+
+.git commit --amend 
+
+.git stash create 
+.git stash list 
+.git stash show filename 
+.git stash apply
+.git stash pop
+.git stash drop
+.git stash clear
+
+.git cherry-pick commitshackid 
+.git cherry-pick --no-commit =>
+
+.git diff commitid
+.git diff filename & directoryname
+.git diff --staged 
+.git diff branch1 branch2
+.git fetch
+.git pull
+.git clone repo URL
+.git push 
+.git remote add origin master
+.git remote add origin remote-repo URL
+.git push -u origin branch-name 
+.git push origin --delete branchname 
+.git push 
+
+.git log 
+.git log --oneline 
+.git log --all
+.git log -3
+.git log --author
+.git log --committer 
+.git log --author=krish
+.git log --before 2.days.ago
+.git log --after 3.days.ago 
+.git log --after date "2021-01-01" --before date "2021-01-02"
+.git log -p =>View All Diff of Changes for Each Commit
+.git log --stat   =>View Summary of Changes for Each Commit 
+.git log --graph => View Commit History in ASCII Graph
+.git log --pretty=format:"Commit Hash: %H, Author: %aN, Date: %aD" =>Format the Git Log Output
+
+
+.git tag =>This command is used to give tags to the specified commit.
+.git tag -1 "v1.8.5"
+.git tag -a v1.4 -m "my version 1.4"
+.git show v1.4
+.git push origin v1.4
+.git push origin --tags 
+.git tag -d v1.4 
+.git push origin --delete remote-tagname
+.git push origin :refs/tags/v1.4
+.git checkout v1.4
+.git checkout -b version v1.4 => create branch and switched into this branch single step 
+
+
+.git merge branch-name
+.git rebase branchname 
+.

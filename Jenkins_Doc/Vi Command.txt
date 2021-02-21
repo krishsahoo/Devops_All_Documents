@@ -1,0 +1,61 @@
+
+
+VI COMMAND 
+
+==============
+
+3 types of editor inside file
+
+-insert mode :i
+-command mode-esc
+-ex mode:[:] enter the colon
+
+
+insert mode:-
+------------
+enter i insert mode
+:q without save but keep on there
+:q! without save and exist
+:w  with save but keep on there
+:wq save and exist
+:wq!save and exist forcefully
+:shift + zz  save and exist
+
+command mode :-
+
+enter esc button
+
+GG(capital)go to BOTTOM OF END PAGE
+gg(small)  go to top of first page
+h left
+l right 
+k up
+j down
+b before
+w word by word
+shift $ end of the line
+shift { go to startin line
+shift } go to end of the page line
+dw delete single word
+dd each line delete
+2d two lines deleted
+3d three lines deleted
+ctrl m middle
+ctrl f next screen
+ctrl l last screen
+p(small) print before line
+p(capital) print after line
+capital r replace 
+yy copy
+paste page
+
+
+
+execute mode
+:set nu   display lines with line number
+:set ic  ignore case searching
+:set noai  unset autoindent
+:set sw 
+
+
+

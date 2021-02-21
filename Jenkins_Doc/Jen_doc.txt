@@ -1,0 +1,197 @@
+
+JENKINS DOCUMENT
+====== =========
+
+==> HOW TO INSTALL JENKINS ON LINX EC2- MACHINE
+
+Step1: Connect to your Linux machine
+
+Step2: update packages 
+ 
+      ==>sudo yum update -y
+
+Step3: check Java is installed, if installed Java
+
+          Java -version
+          yum install Java-1.8.0	
+           
+        To check and select one out of multiple java versions available
+         
+         sudo /usr/sbin/alternatives --config java
+		 
+
+Step4: Download latest jenkins code package 		 
+
+       sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+	 
+Step5: Import o key file from jenkins-ci to enable installation from the package
+
+       	 sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+		 
+Step6: yum install jenkins
+
+
+Step7: service start jenkins  { systemctl start jenkins}
+
+Step8: Access jenkins server using the public DNS of your ec2 on port 8080
+
+       https://(ec2-public-dns):8080
+       example: http://18.188.113.197:8080	
+
+ Note: Here you might have to allow port 8080 in your security group settings 
+
+
+   Useful Trips 
+   -------------
+   
+To start jenkins on a different port:
+
+   update port number in /etc/sysconfig/jenkins
+
+
+To fetch initial admin password:
+
+ cd /var/lib/jenkins/secrets
+ cat initial admin password
+
+To stop jenkins service:
+
+  Sudo service jenkins stop
+
+To uninstall jenkins:
+
+   yum remove jenkins
+   rm -r /var/lib/jenkins
+
+=====================================================================
+
+HOW TO CREATE NORMAL JOB IN JENKINS SERVER:
+--------------------
+Step1: will login to the jerkins server
+
+Step2: Go to the "New Item" 
+
+Step3: Select Freestyle project and write there job name "Basic_Job"
+
+Step4: then Click on okay button it is gng to the Configure Menu
+
+Step5: check top to bottom of job and select build under Execute shell command
+
+Step6: Write there small script echo "who am i"
+
+Step7: Apply & Save => then click Build Now button,open the console output and let see Build output.
+
+
+
+How to use configure global security
+----------------------------------
+
+Go to Jenkins Home => Choose manage Jenkins => Click on Configure global Security
+
+Matrix based Security
+Project-based matrix authorization strategy
+
+=============================================================================
+
+
+If you face this issue ==> " Jenkins is missing the Overall/Read permission"
+----------------------
+
+Go to cd /varlib/jenkins ==> vim config.xml under <useSecurity>true</useSecurity> ==>change the true
+
+Note: use security is in false when did you get the permission denied, then you have to change to true
+
+========================================================================== 
+
+How should you integrate log files in Jenkins 
+----------------------------------------
+
+Go to jenkins home=>Manage Jenkins=>Manage Pluging=>install Audit Trail plugin  
+
+Again Go to Manage jenkins=>Configure menu=>Scroll Down, there you can find Audit Trail Option
+
+  Given the Log Location   <give the server path> /tmp/jenkinsAuditrail.log
+            log file size mB
+			Log file count
+			 Apply & Save
+       go to that path and check the log file cat filename
+=============================================================================
+how to Configure in jenkins to get a notification mails
+-------------------------
+
+Step1: Go to Manage jenkins=>go to Configure menu
+
+Step2: Scroll down there you can find out Extended Email Notification 
+
+       Give SMTP server: Just give smtp.gmail.com <if you have organization level SMTP server name you can give>
+       
+	   	Next Use SMTP Authentication: give your mail id "@gmail.com"
+        Password: 
+        Use SSl
+        SMTP Port 465
+        Apply & Save
+
+Go to any one job under Configure =>Post build actions=>select editable email-Notification	
+
+         Project recepient list <Mail id>	
+	     Attach build log <select>
+         Advanced settings 
+         Add Triggers <Always> select recepient list
+		 Apply & save
+		 Build now and let you see there out put
+		 
+========================================================================================================		 
+
+How do you configure schedule jobs & Automatically build jobs in jenkins <cron Tab>	
+--------------------------------
+
+Step1: Schedule the jobs by 2 types 
+
+    1 Timer
+	2 Poll SCM
+	
+Step2: Go to Job Config menu 
+
+Step3: Under SCM Select Git hub URl given there
+
+Step4: Go to build triggers There select " Build periodically"
+
+Step5: Minute Hour DOM Month DOW
+
+       Minute- Minutes within the hour(0-59)
+       Hour - The hour of the day (0-23)
+       DOM - The day of the Month (1-31)
+       The Month (1-12)
+       Day of the week (0-7) Where 0 and 7 are sunday.
+
+      */2 * * * * - This is timer setup every 2 mins trigger the job automatically
+
+After that again go to the job => under config menu
+
+Go to build triggers =>select Poll SCM => */2 * * * * - This is also every 2 mins trigger the job automatically
+
+
+it seems there are 2 ways like Build periodically, Poll SCM
+
+Diff B/W Build periodically and Poll SCM:
+
+Build periodically means - Schedule the Cron tab job and every 2 mints trigger the job automatically
+
+Poll SCM means- Scheduled the Cron tab job and any developers commit the changes in git hub then only the job will be triggering other wise it won't get trigger	
+	
+=============================================================================================
+
+	
+
+ 	 
+             		 
+			 
+    
+   
+  
+
+
+ 
+ 
+  
+	   

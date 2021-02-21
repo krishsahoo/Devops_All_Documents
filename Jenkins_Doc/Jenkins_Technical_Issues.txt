@@ -1,0 +1,9 @@
+1) Jvm Memory issue
+
+2)Application response time 
+
+3)cpu utilization
+
+4)Memory utilization
+
+5)Gc,thread and heap dump analysis

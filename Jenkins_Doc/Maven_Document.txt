@@ -1,0 +1,20 @@
+MAVEN_dOCUMENT
+==============
+
+
+https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.2.5/
+
+tar xvf package 
+
+vim /root/.bash_profile
+
+export JAVA_HOME=/opt/jdk-1.8.5
+export PATH=$Java_HOME/$path
+
+export M2_HOME=/opt/apache-maven-3.2.5
+export PATH=$M2:$PATH
+
+:wq!
+
+=>java -version
+

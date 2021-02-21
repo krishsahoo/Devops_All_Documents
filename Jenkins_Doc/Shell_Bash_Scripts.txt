@@ -1,0 +1,48 @@
+What is Shell ??
+
+=>Unix shell program interprets user commands which are either directly entered by the user or which can 
+be red from a file called the shell script or shell program 
+
+=>Shellscripts are interpreted and not compile, So when you write shellscript it's interpreted by your 
+operating system and you don't need to compile your shellscript in order to execute
+
+---------------------------------------
+
+There are diff types of bash scripting we will be learning bash script 
+
+
+--------------------------------
+
+cat etc/shells 	
+
+./bin/sh      - sh stands for bourn shell 
+./bin/dash 
+./bin/bash    - bash stands for bourn shell 
+./bin/rbash 
+
+check where bash is located 
+
+.which bash 
+--------------------------------
+
+## Start for shell scriprt programes :
+
+1) Writie a script for Hello-world
+
+touch file1.sh    - .sh is not necessary but practise purpose it's very helpful 
+
+#! /bin/bash    -#! this means shabang or hash bang 
+
+echo "Hello World"
+
+:wq!
+
+.chmod +x file1.sh 
+./file1.sh 
+
+------------------------------------------------------
+
+2)Variables 
+
+#! /bin/bash 
+

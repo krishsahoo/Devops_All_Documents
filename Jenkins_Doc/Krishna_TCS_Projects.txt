@@ -1,0 +1,40 @@
+
+
+
+Having around 4+ years of Experience as a Devops Engineer for Virtusa Consultant services in Bangalore Location
+
+
+
+Durations : December 2016 to October 2018 
+
+Project 1 
+
+Project		:	Remote Software Download
+
+Project Description: Remote Software Download - 
+(provides Web Interface to the end users where users can see the 
+latest updates that available or upgrades that can happen and download the new software available to the 
+mobile phones)
+
+
+Environment	: Git, Maven, Jenkins, Ansible.
+Role		: DevOps Engineer
+Team Size	:  14
+
+==============================================================================
+
+
+
+
+Project	2	: Product Sales Management
+
+Duration : November 2018 to till date 
+Description:
+         
+		 
+Product Management application is primarily used for tracking and maintaining the Pharma Product sales effectively. 
+This application has different modules like Product Manufacturing Inventory, Order and Sales Inventory, 
+Bill Management, Stock Inventory, Alert Management, Customer Management and Reports. The Alert Management 
+is used for sending out alerts to customers, Sales Department and Admin teams. This module will provide different 
+alerts those can be integrated with all other modules. And also Admin user can set up different alerts 
+through Alerts Management page for better tracking of the sales

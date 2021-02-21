@@ -1,0 +1,212 @@
+
+
+Installation part
+=================
+
+
+kub_server ports: 80, 8080, https 443, 6783, 6784, 6443
+
+worker node 8083, 8081, 8080, 80
+
+After login server no need to switch to user 
+
+
+sudo apt-get update -y
+
+sudo apt-get install -y apt-transport-https
+
+sudo su -  => switch to user 
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
+
+cat <<EOF>> /etc/apt/sources.list.d/kubernetes.list 
+
+then add deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+EOF
+
+=> apt-get update
+
+=> apt-get install docker -y
+
+sudo usermod -a -G docker ubuntu
+
+
+systemctl restart docker
+
+systemctl enable docker.service
+
+
+=> apt-get install kubelet kubeadm kubectl kubernetes-cni 
+
+Incase the above command is getting while error you need use this below command
+
+dpkg -i --force /var/cache/apt/archives/kubernetes-cni_0.75-00_amd64.deb 
+
+=> apt-get install vim -y
+
+=> vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+Environment="cgroup-driver=systemd/cgroup-driver=cgroupfs"
+
+We need to create a image
+
+Create image: give name
+
+again give name
+
+select no reboot
+
+==> kubeadm init
+
+run these below commands after finish the above command
+
+## su ubuntu  =>switch to user
+
+=> mkdir -p $HOME/.kube
+=> sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+=> sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+=>kubectl get nodes
+
+=>kubectl get pods --all-namespaces
+
+
+## switch to root user ==> sudo su -
+
+=> sysctl net.bridge.bridge-nf-call-iptables=1  ==> enable the iptables
+
+
+## Switch user to ubuntu => su ubuntu
+
+=> kubectl version | base64 | tr -d '\n'
+
+=> export kubever=$(kubectl version | base64 | tr -d '\n')
+
+=> kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+
+=> kubectl get nodes
+
+=> kubectl get pods --all-namespaces
+
+
+## we need to create on worker node
+
+go to aws dashboard select you have created IAM and launch the instance 
+
+after launching the server we need enable worker ports "in bound role"
+
+login this server
+
+go to the master server there one command is available like 
+
+    " kubeadm join 172.31.38.63:6443 --token 5p2rhw.y5o3nxq1zm17lpbm \
+    --discovery-token-ca-cert-hash sha256:68cf7c26eaedb74a4e1c8c58c2d214047f38bf2ff0cea38ecda771b105b94c75"
+	
+Just copy this and run in worker node
+
+but we don't do anything in worker node but we need to run token in worker node that's it 
+remaining things and we should run in master node
+
+## Go to master server
+
+=> kubectl get nodes	
+	
+=================================================================
+
+## Install dash board
+=========================
+
+Go to master servfer
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+## We need to create one service account in master server
+
+vim service.yml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kube-system
+  ========================================
+  labels:
+    service: elasticsearch
+spec:
+  clusterIP: None
+  ports:
+  - port: 9200
+    name: serving
+  - port: 9300
+    name: node-to-node
+  selector:
+    service: elasticsearch  
+:wq!
+
+=> kubectl apply -f service.yml > we need to apply 
+
+##After that
+
+vim rolebinding.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kube-system 
+	
+:wq!
+
+
+=> Kubectl apply -f rolebinding.yaml
+
+
+=> sudo kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep user | awk '{print$1}')
+
+copy token
+
+we need to run this command
+
+=> nohup kubectl proxy --address 0.0.0.0 --accept-hosts'.*' & =>it can able to allow the all the ip's
+  
+=> kubectl -n kube-system get service kubernetes-dashboard
+
+=> kubectl -n kube-system edit service kubernetes-dashboard
+
+under file we need to change the cluster ip replace with "NodePort"
+
+=> kubectl get nodes
+
+check there port like "443:30975/TCP" it's created like this
+
+we need to take 30975 and go to kub_master inbound rule there you can give
+
+
+Everytime if you want to login with kubernetes-dashboard you should run below command
+
+kubectl -n kube-system get service kubernetes-dashboard
+
+## Again we need to run one command for create the token 
+
+###############################
+
+
+=> kubectl get sa admin-user -n kube-system
+
+=>  kubectl describe sa admin-user -n kube-system
+
+=> kubectl describe secret admin-user-token-9dr6k -n kube-system
+

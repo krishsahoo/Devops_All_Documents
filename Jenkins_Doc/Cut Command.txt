@@ -1,0 +1,41 @@
+-
+                     CUT COMMAND
+				   -----------------
+The cut command in UNIX is a command for cutting out the sections from each line of files and writing the result to standard output.
+
+
+1.cat >cut.txt
+Andhra Pradesh
+Arunachal Pradesh
+Assam
+Bihar
+Chhattisgarh
+ctrl+d
+
+2.cut -b 1,2,3 filename :: -b is byte, 
+
+3.cut -b 1- filename :: it indicates from 1st byte to end byte of a line.
+
+4.cut -b -3 filename :: it indicates from first byte to 3rd byte of a line
+
+5.cut -b 1-3,5-7 filename :: 
+
+6.cut -c 2,5,7 filename :: prints second, fifth and seventh character from each line of the file
+
+7.cut -c 1-7 filename  ::    prints first seven characters of each line from the file.
+
+8.cut -c 1- :: prints starting from first character to end. Here in command only starting
+position is specified and the ending position is omitted.
+
+9.cut -c -5 filename :: prints starting position to the fifth character. Here the starting position
+is omitted and the ending position is specified.
+
+10.cut -f 1 filename :: display the filename
+
+11.cut -d " " -f 1 filename ::If -d option is used then it considered space as a field separator or delimiter:
+
+12.cut --complement -c 2 filename ::         –complement This option can be used in the combination with other options either with -f or with -c.
+
+13.cut -d " " -f 1,2 filename --output-delimiter='%' ::–output-delimiter: By default the output delimiter is same as input delimiter
+
+

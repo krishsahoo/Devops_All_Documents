@@ -1,0 +1,518 @@
+
+Docker_Documentation
+====================
+
+Docker Installation
+--------------------
+
+Install docker 2 ways
+
+1) Go to chrome and hit => get.docker.com
+
+=> curl -fsSL https://get.docker.com -o get-docker.sh
+
+=> sh get-docker.sh
+
+=>docker --version
+
+==========================================
+
+2 ND way
+-------------
+
+Yum update -y
+
+yum-config-manager --enable repo
+
+yum install docker -y
+
+docker --version
+
+Service docker status
+
+service docker start
+
+service docker stop
+
+if you want use this command "systemctl docker start"
+
+Then enable Systemctl => systemctl enable docker
+
+-----------------------
+Install docker in Windows
+----------------------
+=>Go to the chrome and hit this commands =>install docker in windows
+
+there one toolbox is available instead of docker windows
+
+once done the tool box then one file is created as .exe file
+
+just you can run that file and click next and next then the installation is completed
+
+After that you will open the Docker quick start terminal "It's available where you have given the path,while .exe installation step"
+
+ 
+
+Note: must and should install the git, otherwise it won't work because of the docker some dependency files need to install from github.com
+
+----------------------------------------------------------------------------------------------
+
+Docker images
+
+docker search image name 
+
+docker pull image
+
+docker run -it --name -p 80:89 imagename
+
+exit
+
+docker ps
+
+docker ps -a 
+
+ctrl+p+q  
+
+------------------------------
+
+docker images
+
+docker run -itd image name
+
+docker ps 
+
+docker attach cid
+
+exit 
+
+-------------------------
+
+docker images
+
+docker run -itd image name
+
+docker exec -it CID /bin/bash 
+
+exit
+
+Note: diff b/w attach and exec 
+
+Attach -> if you run cid using attach command then you need to exit from cid hit "exit" then cid stopped it won't run back-end
+
+exec - > if you run CID using exec command then you need to exit from cid hit "exit" then cid won't stopped it stay in back-end
+
+=============================================================
+docker backend servers
+
+docker ps -a
+
+docker stop cid
+
+docker start cid
+
+docker rm cid
+
+docker kill -f cid
+
+docker rmi image id
+
+docker rm -f $(docker ps -aq)
+
+docker rmi -f $(docker ps -q)
+
+docker kill $(docker ps -aq)
+
+docker restart cid
+
+docker logs cid 
+=====================================================
+
+How to convert from image to cid and convert from cid to image and need to push to docker hub : 
+---------------------------------------------------------------------------------------------
+
+docker ps -aq
+	
+docker attach cid
+
+under container install some package 
+
+yum install wget -y
+
+touch f{1..10}
+mkdir d{1..10}
+
+then give Cltr+P+Q means exit
+
+docker ps 
+
+docker commit cid new-image:v-1.1
+
+docker images => check new-image:v-1.1 
+
+will base this image then we can create cid and check there previos data
+
+docker run -it new-image:v-1.1
+
+here you can check previous data
+
+then we need to push the image to docker hub
+
+docker login => give user credentials
+
+if you want log out => docker logout 
+
+docker push imageid:v-1.1
+
+Note :you must create local image name like inside docker hub repo name then only it is working,otherwise it won't work
+
+docker inspect cid =>it will display full information about container
+
+==========================================================================
+
+Docker volume
+
+Shared data b/w the host to container ?
+
+docker run -itd -v /opt/filename:/opt image name
+
+docker exec -it cid /bin/bash
+4444
+cd /opt 
+ls -lrt
+
+
+#Shared data b/w the container to container
+
+docker run -itd --volumes-from cid imagename 
+
+docker ps
+
+docker attach cid
+
+cd /opt
+ls -lrt 
+exit
+================================================================
+
+#Docker Custom File
+
+docker file will create Starting line at "FROM ubuntu:6.0"
+
+File Commands : RUN,CMD,COPY,MKDIR,UNZIP,EXPOSE,MAINTAINER,CD,ENV,
+
+you are in any where path are any location you must create like as "dockerfile" then only 
+you can write some data otherwise the file can't work your location
+
+
+&& it is dng run multiple commands at a time
+
+vim dockerfile.txt
+
+FROM ubuntu
+MAINTAINER DOCKER@GMAIL.COM
+RUN yum update -y
+RUN yum install httpd -y
+RUN yum install git -y
+RUN yum install java -y
+RUN cd /opt && touch file1
+RUN mkdir /opt/mvn
+RUN cd /opt/mvn && wget mvn uRl
+RUN cd /opt/mvn && tar -xvf apachefile
+EXPOSE 80
+CMD "echo" "sample file"
+
+:wq!
+
+docker build -t "test-centos:v1.1" path of the file
+
+docker images 
+
+docker run -it iid/imagename
+
+Go to the file path =>cd /opt
+
+check each and everything like "java -version, git --version, service httpd status, apache package....
+
+exit
+
+Note: if you run multiple times that image you can get what you wrote the data every container 
+==============================================================================
+
+#Install jenkins file through docker : 
+------------------------------------
+docker pull jenkins
+
+docker images
+
+docker run -itd --name jenkins-container -p 8086:8080 filename "jenkins file"
+
+We need to enable firewalls like iptables
+
+iptables -F
+
+Go to chrome hit http://hostname:8086
+
+docker stop cid
+
+docker start cid
+
+=============================================================================================
+docker search -s 100 jenkins => it will give information about jenkins upto 100 number rating 
+
+
+docker run -itd --name server1 imagename => create the name instead of running container
+
+docker rename cid newname
+
+docker inspect cid | grep IpA
+
+docker exec -it -u krish cid /bin/bash => Run the cid with existed user 
+
+docker run -it --name server-new -h jenkins-new imagename => Run the cid with hostname 
+
+Hit this command inside container "hostname"
+
+docker history imagename => display image information
+
+docker log cid => display cid information
+
+docker tag old image name new name => replace existing image name
+
+===============================================================================================
+
+#Docker Network
+
+docker network ls
+
+docker network inspect bridge => display bridge information
+
+Note: 172.17.0.0/16 =>it means you can change class-c class-d means we want own ip "172.17.1.1/16" then you can change
+
+     172.17.0.0/24 => it means you can change only class-d means we want own ip "172.17.0.1/24" then you can change 
+	 
+	 diff in /16 you can change only class-c,d in /24 you can change only class-d 
+	 
+
+docker network create --subnet 10.1.0.1/24 gateway 10.0.1.0 bridge-1 =>create new subnet as well new bridge name
+
+docker network rm bridge-1 => remove bridge name
+
+docker network create --subnet 10.1.0.0/16 --gateway 10.0.1.0 --ip-range=10.1.5.0/24 --driver=bridge --label=new-network bridge2
+
+docker network ls
+
+docker inspect network id => check there all information about nid
+
+docker run -it --net bridge2 image name => create own ip address 
+
+check there "hostname -I"
+
+again give Cltr+p+q
+
+again run => docker run -it --net bridge2 imagename
+
+check there "hostname -I"
+
+whenever you will run the container again and again ipaddresses are coming to order level
+
+docker run -it --net bridge2 --ip 10.1.5.100 image name => this means create only our ipaddresses
+
+check "hostname -I"
+
+docker run -it --name server-new --net bridge2 --ip 10.1.5.101 -h first-new imagename =>means create own ip as well with hostname 	 
+
+============================================================================================================
+
+#docker Lync with 2 webservers
+
+docker pull wordpress
+
+docker pull mysql
+
+docker images 
+
+docker run -itd --name wp -p 77:78 wordpress
+
+enable the firewalls => iptables -F 
+
+docker run -itd --name mydb -e MYSQL_ROOT_PASSWORD=12345 mysql
+
+docker run -itd --name dblink --link mydb:mysql -p 79:80 wordpress
+
+Go to chrome and hit http://ipaddress:port
+
+
+================================================================================
+
+#Docker compose
+
+We need to run multiple containers at a time this means docker compose 
+
+So must and should docker compose file should be in yml file format  
+
+
+Run this command to download the latest version of docker compose 
+
+2 ways we can install docker compose 
+
+1)yum install docker-compose 
+
+2)go to chrome and take the compose package into your command prompt 
+
+ curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ 
+ 
+chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+Next we will create one yaml file 
+
+###############
+
+vim docker-compose.yaml
+
+version: 3
+
+services: 
+   db:
+      image: mysql:latest
+      volumes:
+        - db_data: /var/lib/mysql
+       restart: always
+       environment: 
+       MYSQL_ROOT_PASSWORD: 
+       MYSQL_DATABASE: WORDPRESS
+       MYSQL_USER:
+       MYSQL:PASSWORD: 
+
+  wordpress:
+    depends_on:
+       - db:
+    image: wordpress:latest
+    ports: 
+     - "8989:80"
+    restart: always
+    environment:
+    WORDPRESS_DB_HOST: db:3306
+    WORDPRESS_DB_USER:
+    WORDPRESS_DB_PASSWORD:
+    WORDPRESS_DB_NAME:
+
+volumes:
+   db_data: {}
+
+:wq!
+
+docker ps
+
+docker-compose up -d
+
+docker ps
+
+go to chrome hit "http://hostname:port
+
+you must take wordpress of hostname and hit there above url
+
+docker-compose down
+
+
+##############################
+
+docker-compose commands
+-------------------------
+   
+docker-compose build
+
+
+Options:
+    --compress              Compress the build context using gzip.
+    --force-rm              Always remove intermediate containers.
+    --no-cache              Do not use cache when building the image.
+    --pull                  Always attempt to pull a newer version of the image.
+    -m, --memory MEM        Sets memory limit for the build container.
+    --build-arg key=val     Set build-time variables for services.
+    --parallel              Build images in parallel.
+
+ 
+Config
+
+  --resolve-image-digests  Pin image tags to digests.
+    --no-interpolate         Don't interpolate environment variables.
+    -q, --quiet              Only validate the configuration, don't print anything.
+    --services               Print the service names, one per line.
+    --volumes                Print the volume names, one per line.
+    --hash="*"               Print the service config hash, one per line.
+                             Set "service1,service2" for a list of specified services
+                             or use the wildcard symbol to display all services.
+							 
+create
+
+--force-recreate       Recreate containers even if their configuration and
+                           image haven't changed. Incompatible with --no-recreate.
+    --no-recreate          If containers already exist, don't recreate them.
+                           Incompatible with --force-recreate.
+    --no-build             Don't build an image, even if it's missing.
+    --build                Build images before creating containers.							 
+
+
+create
+
+    --rmi type              Remove images. Type must be one of:
+                              'all': Remove all images used by any service.
+                              'local': Remove only images that don't have a
+                              custom tag set by the `image` field.
+    -v, --volumes           Remove named volumes declared in the `volumes`
+                            section of the Compose file and anonymous volumes
+                            attached to containers.
+    --remove-orphans        Remove containers for services not defined in the
+                            Compose file
+    -t, --timeout TIMEOUT   Specify a shutdown timeout in seconds.
+                            (default: 10)
+							
+kill
+-s SIGNAL         SIGNAL to send to the container.
+                      Default signal is SIGKILL.
+
+logs
+--no-color          Produce monochrome output.
+    -f, --follow        Follow log output.
+    -t, --timestamps    Show timestamps.
+    --tail="all"        Number of lines to show from the end of the logs
+                        for each container.
+
+===============================================================================
+						
+Docker Swarm_Document : 
+--------------------
+1)How to initialize the swarm ?
+
+docker swarm init --advertise-addr ipadd => we need to run this command in manager server-new
+
+then created one token copy that and need to past into client servers
+
+docker info => information about all containers like status, start stop pause 
+
+docker swarm leave --force  =>remove the swarm
+
+
+docker service ls =>List the service
+
+docker service ps name =>List task of services
+
+docker service create name image name =>Create service name
+
+docker service rm name =>Remove the service
+
+docker service scale name=5 => scale services
+
+docker swarm leave --force =>Leave the swarm
+
+docker node ls => List the nodes
+
+docker node ps =>List services in node
+
+docker node rm node id => remove the node 
+
+
+

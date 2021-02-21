@@ -1,0 +1,88 @@
+                        
+						
+						    
+							
+							
+SCP COMMAND (COPY THE FILES ONE SERVER TO ANOTHER SERVER LOCAL TO REMOte,REMOTE TO LOCAL)
+										   
+										   
+										   
+										   
+										   THE BASIC OPTION SCP IS 
+										   
+										   
+										   SCP OPTIONS SRC DESTINATION
+										   
+										   
+1.HOW TO TRANSFER A FILE FROM LOCAL TO REMOTE.
+
+   SCP FILENAME USER@192.168.2.1:/HOME/USER2/DESKTOP
+   
+   
+2.how to transfer multiple files local to remote
+
+   
+scp file1 file2 file3 user@192.168.2.1:/home/user2/desktop
+
+
+3.how to transfer portnumber from local to remote
+
+
+   scp -p 5556 user@192.168.2.1:/home/user2/desktop
+
+
+4.how to send dir from local to remote
+
+
+    scp -r -p 5556 user@192.168.2.1:/home/user2/desktop
+	
+	
+5.how to send cmplete process with portnumber from local to remote
+
+
+    scp -v -p 5556 user@192.168.2.1:/home/user2/desktop
+
+6.how to send file from local to remote (this command is send file normally 
+
+
+  scp -q -p 5556 user@192.168.2.1:/home/user2/desktop
+   
+   and
+   
+  scp -P -p 5556 uesr@192.168.2.1:/home/user2/desktop
+   
+
+7. how to send file from local to remote
+
+  scp -Cpv -P5556 test-dir user@192.168.2.1:/home/user2/desktop
+
+C means save time and speed (capital c) and p means print v means verose  -p means portnumber
+
+
+8.how to send file with kilo bytes and save time from local to remote
+
+
+  scp -P5556 -rl 600 new-file.txt user@192.168.2.1:/home/user2/desktop   
+  
+  
+  600 means bytes 
+  
+  
+9.how to send file from remote to local
+
+  scp -P5556 file user2@192.168.2.1:/home/user2/desktop user@192.168.2.1:/home/user2/desktop	
+
+
+10.  how to send multiple files at a time from remote to local
+
+  scp file1 file2 user@192.168.2.1:/home/user2/desktop
+  
+11.how to copy local to local
+  scp user@192.168.2.1:/home/user1/desktop/filename user2@192.168.2.1:/home/user1/desktop
+
+  
+ 							
+										   
+										   
+										   
+										   

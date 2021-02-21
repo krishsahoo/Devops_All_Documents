@@ -1,0 +1,73 @@
+SED COMMAND   (sed is a special editor used for modifying files automatically)
+
+sed is a stream editor
+
+Each one of them has its own functionality and specialties
+
+
+1 sed "s/bad/good/" filename (replace bad to good)
+
+2sed s/bad/good/g filename  (replace bad to good but globally changed)
+
+3sed 's/\//,/' filename    (replace the caracter '/' with ',' in a file)
+
+4 sed "4 s/hai/(&)/" filename  (hai is in openparanthesis)
+
+5 sed '5d' filename  (remove 5th line)
+
+sed -i '/^$/d' file.txt (remove empty blank line )
+
+6 sed '^$/d' filename  9remove empty blank lines)
+
+7 sed '1,2d' filename  (to remove 1 and 2 line )
+
+8 sed 'p' filename  (print all data with each oneline print to two lines)  
+
+9 sed '1,2p' filename  (print with 1 and 2 lines are each one line printed extraline)
+
+10 sed '/^$/p' filename  (printed empty blank lines) note:print eachline two times
+
+11 sed -n '/hai/!p' filename  (does not display hai line display other lines in file)
+
+12 sed 's.hai/hello/g' filename > newfilename (repalce with new file)
+
+https://www.geeksforgeeks.org/sed-command-in-unix/
+
+-n, --quiet, --silent
+                 suppress automatic printing of pattern space
+  -e script, --expression=script
+                 add the script to the commands to be executed
+  -f script-file, --file=script-file
+                 add the contents of script-file to the commands to be executed
+  --follow-symlinks
+                 follow symlinks when processing in place
+  -i[SUFFIX], --in-place[=SUFFIX]
+                 edit files in place (makes backup if SUFFIX supplied)
+  -c, --copy
+                 use copy instead of rename when shuffling files in -i mode
+  -b, --binary
+                 does nothing; for compatibility with WIN32/CYGWIN/MSDOS/EMX (
+                 open files in binary mode (CR+LFs are not treated specially))
+  -l N, --line-length=N
+                 specify the desired line-wrap length for the `l' command
+  --posix
+                 disable all GNU extensions.
+  -r, --regexp-extended
+                 use extended regular expressions in the script.
+  -s, --separate
+                 consider files as separate rather than as a single continuous
+                 long stream.
+  -u, --unbuffered
+                 load minimal amounts of data from the input files and flush
+                 the output buffers more often
+  -z, --null-data
+                 separate lines by NUL characters
+  --help
+                 display this help and exit
+  --version
+                 output version information and exit
+
+If no -e, --expression, -f, or --file option is given, then the first
+non-option argument is taken as the sed script to interpret.  All
+remaining arguments are names of input files; if no input files are
+specified, then the standard input is read.
